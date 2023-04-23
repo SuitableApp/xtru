@@ -3,7 +3,7 @@
 
 - Clone our repository, and change directory.
 ```bash
-git clone --verbose --progress git@gitlab:production/oracle-db.git ~/xtru
+git clone git@github.com:SuitableApp/xtru.git ~/xtru
 cd ~/xtru
 ```
 
