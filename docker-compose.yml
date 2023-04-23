@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  builder:
+
+    build:
+
+      args:
+        UNAME_M: $HOSTTYPE
+
+      context:
+        ./ctx
+
+    volumes:
+      - $PWD/init_container.sh:/usr/local/bin/init_container.sh:ro
+      - $PWD/tns_admin:/opt/oracle/tns_admin:ro
+      - $PWD:/home/xtru/xtru
+      - $PWD/rpmbuild:/home/xtru/rpmbuild
+      - $PWD/sa_home:/home/xtru/sa_home
+

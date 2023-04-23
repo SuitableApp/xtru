@@ -1,0 +1,47 @@
+#!/usr/bash
+
+if [ "$ORACLE_HOME"x == ""x  ]; then
+    echo "Environmental variable ORACLE_HOME is not defined."
+    exit 1
+fi
+
+if [ "$LIB_HOME"x == ""x  ]; then
+    echo "Environmental variable LIB_HOME is not defined."
+    exit 1
+fi
+
+# $(isainfo -n) will be parsed "amd64" on Solaris for x86_64,
+#           and will be parsed "sparcv9" on Solaris for SPARC64
+
+if [ -L $LIB_HOME/$(isainfo -n) ]; then
+    rm $LIB_HOME/$(isainfo -n)
+else
+    echo "Already $LIB_HOME/$(isainfo -n) has been removed"
+fi
+
+SYMLINK=`readlink -f $ORACLE_HOME/lib/libocci.so`
+if [ `basename $SYMLINK` == "libocci_cpp11.so.12.1" ]; then
+    PWD=`pwd`
+    cd $ORACLE_HOME/lib/
+    ln -sf libocci.so.12.1 libocci.so
+    if [ $? -ne 0 ]; then
+        echo "Failed to re-link source from libocci_cpp11.so.12.1 to libocci.so.12.1"
+        exit 1
+    else
+        echo "Pointee of libocci.so is changed from libocci_cpp11.so.12.1 to libocci.so.12.1"
+    fi
+    cd $PWD
+else
+    echo "Already libocci.so points libocci.so.12.1"
+fi
+
+while :; do
+    echo "Attempt to remove $LIB_HOME"
+    if [ -d $LIB_HOME ] && [ -z "$(ls -A $LIB_HOME)" ]; then
+        rmdir $LIB_HOME
+    else
+        break
+    fi
+    LIB_HOME=`dirname $LIB_HOME`
+    [ "$LIB_HOME" == '/opt' ] && break
+done 

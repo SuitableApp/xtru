@@ -1,0 +1,75 @@
+#!/usr/bash
+
+typeset -a INV_FILE_CAND
+typeset -a ORACLE_HOME_CAND
+typeset -i idx
+LIB_HOME=/opt/SunProd/studio12u4/solarisstudio12.4-0415pse/lib/compilers
+
+echo "whoami: $(whoami)"
+if [ "$ORACLE_HOME"x == ""x ]; then
+    echo "Environmental variable ORACLE_HOME is not found"
+    echo "Looking for oraInventory"
+    which locate > /dev/null
+    if [ $? -ne 0 ]; then
+        echo "locate command not found"
+        exit 1
+    fi
+    INV_FILE_CAND=(`locate oraInventory/ContentsXML/inventory.xml`)
+    if [ $? -ne 0 ]; then
+        echo "inventory.xml not found"
+        echo "Run sudo updatedb first"
+        exit 1
+    fi
+    if [ ${#INV_FILE_CAND[*]} -gt 1 ]; then
+        echo "Several oraInventory found"
+        while :; do
+            idx=0
+            for dname in ${INV_FILE_CAND[*]}; do
+                echo "\t$idx: $dname"
+                idx=$idx+1
+            done
+            printf "Select one as number (You can enter -1 to abort): "
+            read SELE_NUM
+            [ $SELE_NUM -ge 0 ] && [ $SELE_NUM -lt ${#INV_FILE_CAND[*]} ] && break
+            if [ $SELE_NUM -eq -1 ]; then
+                echo "Aborted"
+                exit 1
+            fi
+            echo "Unexpected value $SELE_NUM specified. Retry enter."
+        done 
+        INV_FILE=${INV_FILE_CAND[$SELE_NUM]}
+    else
+        INV_FILE=${INV_FILE_CAND[0]}
+    fi
+    echo "oraInventory is $INV_FILE"
+    echo "Looking for ORACLE_HOME from oraInventory"
+    ORACLE_HOME_CAND=(`sed -n "s/.*LOC=\"\([^\"]*\)\".*/\1/p" $INV_FILE`)
+    if [ ${#ORACLE_HOME_CAND[*]} -gt 1 ]; then
+        echo "Several ORACLE_HOME found"
+        while :; do
+            idx=0
+            for dname in ${ORACLE_HOME_CAND[*]}; do
+                echo "\t$idx: $dname"
+                idx=$idx+1
+            done
+            printf "Select one as number (You can enter -1 to abort): "
+            read SELE_NUM
+            [ $SELE_NUM -ge 0 ] && [ $SELE_NUM -lt ${#ORACLE_HOME_CAND[*]} ] && break
+            if [ $SELE_NUM -eq -1 ]; then
+                echo "Aborted"
+                exit 1
+            fi
+            echo "Unexpected value $SELE_NUM specified. Retry enter."
+        done 
+        ORACLE_HOME=${ORACLE_HOME_CAND[$SELE_NUM]}
+    else
+        ORACLE_HOME=${ORACLE_HOME_CAND[0]}
+    fi
+fi
+
+echo "Environmental variable ORACLE_HOME is $ORACLE_HOME"
+
+cat >$1 <<!
+ORACLE_HOME=$ORACLE_HOME
+LIB_HOME=$LIB_HOME
+!

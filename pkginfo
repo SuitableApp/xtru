@@ -1,0 +1,5 @@
+# mandatory
+PKG=SAxtru
+CATEGORY=application
+# optionaly
+BASEDIR=/opt

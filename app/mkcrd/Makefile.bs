@@ -1,0 +1,35 @@
+#Makefile
+CONF      = Debug
+COMPILER  = clang++
+CND_CONF  = $(CONF)
+INCLUDE   = -I/usr/local/ssl/include
+CFLAGS    = -c -fexceptions -std=c++11
+LIBS      = -L/usr/local/ssl/lib -lcrypto
+OBJS      = cCryptOpenSSL.o cInput.o nsMkcrd.o mkcrd.o
+OBJS_LIB  = nsCompo/cApplication.o nsCompo/cArgStyleParser.o nsCompo/cArgUtils.o nsCompo/cEnvStrings.o nsCompo/cStatCounter.o nsCompo/cVectorScope.o nsCompo/cSwitchUtils.o
+OBJS_TEST = test/crd_encode.o test/crd_decode.o test/test_input.o test/test_mkcrd.o test/test_argutil.o test/test_env.o test/test_counter.o
+.SUFFIXES: .cpp .o
+
+ifeq ($(CONF),Release)
+OPTIMIZING= -O3 -DNDEBUG
+else
+OPTIMIZING= -g -O0 -fstandalone-debug
+endif
+
+all: $(OBJS) $(OBJS_LIB)
+	$(COMPILER) -o mkcrd $(OBJS) $(OBJS_LIB) $(LIBS)
+
+test: $(OBJS) $(OBJS_LIB) $(OBJS_TEST)
+	$(COMPILER) -o test/crd_encode test/crd_encode.o cCryptOpenSSL.o $(LIBS)
+	$(COMPILER) -o test/crd_decode test/crd_decode.o cCryptOpenSSL.o $(LIBS)
+	$(COMPILER) -o test/test_input test/test_input.o cInput.o $(LIBS)
+	$(COMPILER) -o test/test_mkcrd test/test_mkcrd.o cCryptOpenSSL.o cInput.o nsMkcrd.o $(OBJS_LIB) $(LIBS)
+	$(COMPILER) -o test/test_argutil test/test_argutil.o $(OBJS_LIB) $(LIBS)
+	$(COMPILER) -o test/test_env test/test_env.o $(OBJS_LIB) $(LIBS)
+	$(COMPILER) -o test/test_counter test/test_counter.o $(OBJS_LIB) $(LIBS)
+
+.cpp.o:
+	$(COMPILER) $(CFLAGS) $(OPTIMIZING) $(INCLUDE) -o $*.o $<
+
+clean:
+	rm -f mkcrd $(OBJS) $(OBJS_LIB) $(OBJS_TEST)

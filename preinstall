@@ -1,0 +1,45 @@
+#!/usr/bash
+
+if [ "$ORACLE_HOME"x == ""x  ]; then
+    echo "Environmental variable ORACLE_HOME is not defined."
+    exit 1
+fi
+
+if [ "$LIB_HOME"x == ""x  ]; then
+    echo "Environmental variable LIB_HOME is not defined."
+    exit 1
+fi
+
+LIB125_HOME=/opt/developerstudio12.5/lib/compilers
+mkdir -p $LIB_HOME
+if [ $? -ne 0 ]; then
+    echo "Failed to new directory $LIB_HOME"
+    exit 1
+fi
+
+SYMLINK=`readlink -f $ORACLE_HOME/lib/libocci.so`
+if [ `basename $SYMLINK` == "libocci.so.12.1" ]; then
+    PWD=`pwd`
+    cd $ORACLE_HOME/lib/
+    ln -sf libocci_cpp11.so.12.1 libocci.so
+    if [ $? -ne 0 ]; then
+        echo "Failed to re-link source from libocci.so.12.1 to libocci_cpp11.so.12.1"
+        exit 1
+    else
+        echo "Pointee of libocci.so is changed from libocci.so.12.1 to libocci_cpp11.so.12.1"
+    fi
+    cd $PWD
+else
+    echo "Already libocci.so points libocci_cpp11.so.12.1"
+fi
+
+# $(isainfo -n) will be parsed "amd64" on Solaris for x86_64,
+#           and will be parsed "sparcv9" on Solaris for SPARC64
+
+if [ -L $LIB_HOME/$(isainfo -n) ]; then
+    echo "Already $LIB_HOME/$(isainfo -n) has been created"
+else
+    ln -sf $LIB125_HOME/$(isainfo -n) $LIB_HOME/$(isainfo -n)
+    echo "Added a symbolic link $LIB_HOME/$(isainfo -n)"
+    echo "          as alias of $LIB125_HOME/$(isainfo -n)"
+fi
