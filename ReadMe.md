@@ -1,44 +1,36 @@
 
-## Getting started
-
-- Clone our repository, and change directory.
-```bash
-git clone git@github.com:SuitableApp/xtru.git ~/xtru
-cd ~/xtru
-```
-
-## About what to expect before you start building.
-
-- A docker image building (i.e. docker-compose build) depends on specs, but in most cases it takes a few minutes.
-- However, building a container takes longer than that. It may be over when you go out for a haircut and come back.
-- This is because it will start building the LLVM, Clang, and Boost C++ Libraries (if you haven't done so already).
+# Getting started
+## Prepare to builld.
+- Clone the repository, and change directory.
+  ```bash
+  git clone git@github.com:SuitableApp/xtru.git ~/xtru
+  cd ~/xtru
+  ```
+- Prepair a stage of building RPM packages, and a working directory for the application.
+  ```bash
+  mkdir -p rpmbuild sa_home
+  chmod 0777 rpmbuild sa_home
+  ```
 
 ## How to build and run.
 
 - You can start a container with the following command. If the image has not been built, it will be prepared first.
+  ```bash
+  docker-compose run --rm builder
+  ```
+- About what to expect before you start building:
+  - A docker image building (i.e. docker-compose build) depends on specs, but in most cases it takes a few minutes.
+  - However, building a container takes longer than that. It may be over when you go out for a haircut and come back.
+  - This is because it will start building the LLVM, Clang, and Boost C++ Libraries (if you haven't done so already).
 
-```bash
-docker-compose run --rm builder
-```
--
-```bash
-git clone --verbose --progress git@gitlab:production/oracle-db.git ~/xtru
-```
-- Prepair a stage of building RPM packages, and a working directory for the application.
-```bash
-mkdir -p rpmbuild sa_home
-chmod 0777 rpmbuild sa_home
-```
 
 - Depending on your platform, you may receive the following warning: and build fails.
-
-> WARN[0000] The "HOSTTYPE" variable is not set. Defaulting to a blank string.
+  > WARN[0000] The "HOSTTYPE" variable is not set. Defaulting to a blank string.
 
 - Please fill in a required values in the following command.
-
-```bash
-echo "HOSTTYPE=$(uname -m)" > ./.env
-```
+  ```bash
+  echo "HOSTTYPE=$(uname -m)" > ./.env
+  ```
 
 ```bash
 time docker build --no-cache --progress plain --build-arg UNAME_M=$(uname -m) \
@@ -55,8 +47,7 @@ docker run -it --rm --hostname xtru_host --name xtru \
 ```
 
 - Storage allocated by docker-compose build can be released.
-
-```bash
-docker rmi xtru-builder
-docker builder prune
-```
+  ```bash
+  docker rmi xtru-builder
+  docker builder prune
+  ```
