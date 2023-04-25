@@ -39,6 +39,6 @@ prototype
 .bashrc
 .gitconfig
 .rpmmacros
-ps_home/
+sa_home/
 rpmbuild/
 tns_admin/

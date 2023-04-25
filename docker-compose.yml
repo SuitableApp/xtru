@@ -18,4 +18,4 @@ services:
       - $PWD:/home/xtru/xtru
       - $PWD/rpmbuild:/home/xtru/rpmbuild
       - $PWD/sa_home:/home/xtru/sa_home
-
+      - $PWD/.gitconfig:/home/xtru/.gitconfig
