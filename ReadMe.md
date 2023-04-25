@@ -6,12 +6,16 @@
   git clone git@github.com:SuitableApp/xtru.git ~/xtru
   cd ~/xtru
   ```
+- Prepare dotfiles.tar.gz tns_admin
+  ```bash
+  ```
 - Prepair a stage of building RPM packages, and a working directory for the application.
   ```bash
   mkdir -p rpmbuild sa_home
-  chmod 0777 rpmbuild sa_home
+  sudo chmod 0777 rpmbuild sa_home tns_admin
   ```
 
+## TODO
 ## How to build and run.
 
 - You can start a container with the following command. If the image has not been built, it will be prepared first.

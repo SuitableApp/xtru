@@ -16,6 +16,7 @@ build/
 **/nbproject/private/
 **/build/
 **/dist/
+.env
 .dep.inc
 .gitconfig
 .bash_history
