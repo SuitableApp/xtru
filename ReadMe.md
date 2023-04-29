@@ -69,14 +69,24 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
   git clone git@github.com:SuitableApp/xtru.git ~/xtru
   cd ~/xtru
   ```
-- Prepare dotfiles.tar.gz tns_admin
-  ```bash
-  ```
 - Prepair a stage of building RPM packages, and a working directory for the application.
   ```bash
-  mkdir -p ./{sa_home,rpmbuild,tns_admin}
-  chmod 0777 ./{sa_home,rpmbuild,tns_admin}
-  touch .gitconfig
+  mkdir -p ~/{sa_home,rpmbuild,tns_admin}
+  chmod a+w ~/{sa_home,rpmbuild}
+  ```
+- Save a copy of the Oracle Net configuration parameter files valid for your environment to **tns_admin**. For example:
+  ```bash
+  cp $TNS_ADMIN/{sqlnet,tnsnames}.ora ~/tns_admin/
+  ```
+- Save a copy of dot files and dot folders valid in your environment to **dotfiles.tar**. Anything saved here will be copied to the $HOME of the application user: "**xtru**" when building the image.
+  ```bash
+  cp dotfiles.tar ctx/
+  tar -C ~/ -rvf ctx/dotfiles.tar .{oci,ssh,wallet}/
+  tee ~/.gitconfig <<EOF
+  [user]
+     name = your_github_account
+     email = your@email.address
+  EOF
   ```
 - Refresh .ssh/known_hosts
   ```bash
@@ -90,8 +100,8 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
 - Storage allocated by docker-compose build can be released.
   ```bash
   docker rmi xtru-builder
-  docker builder prune
-  docker image prune -a
+  docker builder prune -f
+  docker image prune -a -f
   ```
 
 - You can start a container with the following command. If the image has not been built, it will be prepared first.

@@ -4,7 +4,6 @@
 *.png
 *.o
 *.d
-**/*.tar.gz
 lib/*.a
 GPATH
 GRTAGS
@@ -18,10 +17,6 @@ build/
 **/dist/
 .env
 .dep.inc
-.gitconfig
-.bash_history
-.bashrc
-.rpmmacros
 core
 core.[0-9][0-9]*
 app/mkcrd/mkcrd
@@ -34,11 +29,4 @@ app/mkcrd/test/test_input
 app/mkcrd/test/test_mkcrd
 demo/queries.csv
 PLM6mtu/
-prototype
-.bash_history
-.bashrc
-.gitconfig
-.rpmmacros
-sa_home/
-rpmbuild/
-tns_admin/
+ctx/dotfiles.tar
