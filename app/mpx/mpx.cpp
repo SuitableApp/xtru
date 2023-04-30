@@ -172,10 +172,10 @@ int main(int argc, char *argv[], const char** envp)
             mos_ << std::string(rc.iCotinue() ? "Completed successfully" : "Canceled by request");
         }
         const auto iMiSec = stat_.iDurationMilliSeconds();
-        const auto iProductivity = stat_.iGetOutputBytes() * 1000 / iMiSec;
-        mos_ << boost::format(". Took %.2f seconds. Productivity %siB/sec.")
+        const auto iDataRate = stat_.iGetOutputBytes() * 1000 / iMiSec;
+        mos_ << boost::format(". Took %.2f seconds. Data rate %siB/sec.")
             % ps::lib::sIntToa(iMiSec / 1000)
-            % ps::lib::sBinIntToIntStr(iProductivity)
+            % ps::lib::sBinIntToIntStr(iDataRate)
             << std::endl;
     }
     return rc;

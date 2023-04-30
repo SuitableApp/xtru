@@ -27,12 +27,12 @@ RUN dnf -y update && dnf -y install oracle-epel-release-el8 oraclelinux-develope
     dnf clean all
 
 # Avoiding obstacles in distributing files containing hyphens.
-RUN sed -e "s/\(ispythonprog = re\.compile\)\(.\+\)/\1(r'^[-\\\w]+\\\.py$')/" -i /usr/bin/pathfix.py 
+RUN sed -e "s/\(ispythonprog = re\.compile\)\(.\+\)/\1(r'^[-\\\w]+\\\.py$')/" -i /usr/bin/pathfix.py
 
 # Change sudoers
 RUN sed -i /etc/sudoers \
  -e "s/%wheel\tALL=(ALL)\tALL/# %wheel\tALL=(ALL)\tALL/g" \
- -e "s/# %wheel\tALL=(ALL)\tNOPASSWD: ALL/%wheel\tALL=(ALL)\tNOPASSWD: ALL/g" 
+ -e "s/# %wheel\tALL=(ALL)\tNOPASSWD: ALL/%wheel\tALL=(ALL)\tNOPASSWD: ALL/g"
 
 # Install products of Oracle Corporation
 # Newer packages are available, but These are chosen because they are available for both aarch64 and x86-64.
@@ -46,13 +46,13 @@ RUN wget --directory-prefix=/tmp https://download.oracle.com/otn_software/linux/
 RUN groupadd $DEVELOPER
 RUN useradd -g $DEVELOPER -G wheel $DEVELOPER
 
-RUN ulimit -c unlimited 
+RUN ulimit -c unlimited
 
 USER $DEVELOPER
 WORKDIR /home/$DEVELOPER
-ADD dotfiles.tar.gz .
-RUN sudo chown -R $DEVELOPER: .{oci,ssh,wallet}/ .{screen,vim}rc
-RUN mkdir -p ~/.vim/autoload/ && \
+ADD dotfiles.tar .
+RUN for item in .{oci,ssh,wallet}/ .{bash,screen,vim}rc ; do if [ -e $item ]; then sudo chown -R $DEVELOPER: $item; fi; done
+RUN mkdir -p ~/.vim/autoload/ ~/vim/var/undo/ && \
     wget --directory-prefix=~/.vim/autoload https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim && \
     mkdir -p ~/.vim/bundle && \
     git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim

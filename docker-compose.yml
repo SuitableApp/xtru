@@ -12,10 +12,16 @@ services:
       context:
         ./ctx
 
+    container_name:
+      dev_xtru
+
+    hostname:
+      suitableapp
+
     volumes:
       - $PWD/init_container.sh:/usr/local/bin/init_container.sh:ro
-      - $PWD/tns_admin:/opt/oracle/tns_admin:ro
       - $PWD:/home/xtru/xtru
-      - $PWD/rpmbuild:/home/xtru/rpmbuild
-      - $PWD/sa_home:/home/xtru/sa_home
-
+      - $HOME/tns_admin:/opt/oracle/tns_admin:ro
+      - $HOME/rpmbuild:/home/xtru/rpmbuild
+      - $HOME/sa_home:/home/xtru/sa_home
+      - $HOME/.gitconfig:/home/xtru/.gitconfig
