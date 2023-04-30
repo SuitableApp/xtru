@@ -2,7 +2,7 @@
 
 ## Synopsis
 
-- Extreme Unloader (**XTRU**) is an app for quick file exporting from Oracle Database.
+- **Extreme Unloader** (XTRU) is an app for quick file exporting from Oracle Database.
 - This app is written in Standard C++11 using Boost C++ libraries and Oracle C++ Call Interface (OCCI) functions.
 - High utilization efficiency for network and memory buffer can expect since it can fetch multiple rows at a time.
 - By allocating threads for each partition in the table, CPU time can be intensively input, so you can fully utilize system scalability and reduce the time required.
@@ -10,9 +10,11 @@
 - XTRU works so smoothly that it helps to incarnate operational plans that have taken too long and given up.
 - XTRU can output control files for "SQL*Loader" along with flat files, making it easier to transport data.
 
-## An example of exporting a familiar table:
 
-- Data file.
+## An example of exporting a familiar table
+
+- Data file
+
 ```plain
 00000000587369,~~SMITH~~,~~CLERK~~,7902,~~19801217000000~~,800,,20,
 00000000657499,~~ALLEN~~,~~SALESMAN~~,7698,~~19810220000000~~,1600,300,30,
@@ -27,7 +29,8 @@
 00000000607902,~~FORD~~,~~ANALYST~~,7566,~~19811203000000~~,3000,,20,
 00000000607934,~~MILLER~~,~~CLERK~~,7782,~~19820123000000~~,1300,,10,
 ```
-- Control file for using SQL*Loader.
+
+- Control file for using SQL*Loader
 ```plain
 LOAD
 INFILE "SCOTT.EMP.dat" "VAR 10"
@@ -43,8 +46,9 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
 ,  "DEPTNO"     DECIMAL EXTERNAL(3)
 )
 ```
-- The factory default settings are output in a representation format that maximizes performance when reloading.
-- CSV, TSV, and fixed-length formats can also be selected.
+- Factory settings are tuned to produce output in a representation format that maximizes reload performance.
+- CSV, TSV, and fixed-length format can also be selected.
+
 
 ## Data Sheet
 
@@ -62,14 +66,14 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
 
 # Getting started
 
-## Prepare to builld.
+## Prepare for composition by Docker.
 
-- Clone the repository, and change directory.
+- Clone the repository and move to it.
   ```bash
   git clone git@github.com:SuitableApp/xtru.git ~/xtru
   cd ~/xtru
   ```
-- Prepair a stage of building RPM packages, and a working directory for the application.
+- Prepair a stage of building RPM packages and a working directory for the application.
   ```bash
   mkdir -p ~/{sa_home,rpmbuild,tns_admin}
   chmod a+w ~/{sa_home,rpmbuild}
@@ -78,10 +82,16 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
   ```bash
   cp $TNS_ADMIN/{sqlnet,tnsnames}.ora ~/tns_admin/
   ```
-- Save a copy of dot files and dot folders valid in your environment to **dotfiles.tar**. Anything saved here will be placed to the $HOME of the application user: "**xtru**" when building the image.
+  or
+  ```bash
+  cp $ORACLE_HOME/network/admin/{sqlnet,tnsnames}.ora ~/tns_admin/
+  ```
+
+- Gather copies of the dotfiles and dotfolders that are valid in your environment into **dotfiles.tar**. It already has some commonly used dotfiles (e.g. vvimrc, .screenrc).
+- Anything saved it will be placed to the $HOME of the application user "**xtru**" when composing the image.
 - ".ssh/" is probably necessary if you ever connect to GitHub.
-- Include ".oci/" if you want to be connected with oci form the container.
-- Include ".wallet/" if you want to export from Autonomous Database under the mTLS authentication. 
+- Include ".oci/" if you want to be connected to OCI (Oracle Cloud Infrastructure) form the container.
+- Include ".wallet/" if you want to be connected to Autonomous Database under the mTLS authentication.
   ```bash
   cp dotfiles.tar ctx/
   tar -C ~/ -rvf ctx/dotfiles.tar .{oci,ssh,wallet}/
@@ -91,13 +101,8 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
      email = your@email.address
   EOF
   ```
-- Refresh .ssh/known_hosts
-  ```bash
-  tar --delete -vf ctx/dotfiles.tar.gz ./.ssh/known_hosts
-  tar -C ~/ -rvf ctx/dotfiles.tar.gz ./.ssh/known_hosts
-  ```
 
-## How to build and run.
+## Compose and run
 
 - Storage allocated by docker-compose build can be released.
   ```bash
@@ -110,10 +115,11 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
   ```bash
   docker-compose run --rm builder
   ```
-- About what to expect before you start building an image:
+- What you need to know before you start creating an image:
   - A docker image building (i.e. docker-compose build) depends on specs, but in most cases it takes a few minutes.
   - However, building a container takes longer than that. It may be over when you go out for a haircut and come back.
   - This is because it will start building the LLVM, Clang, and Boost C++ Libraries (if these have not built so already).
+  - Oracle Database Instant Client 19c will be downloaded and set up automatically, as it is required for application build and runtime.
 
 - Depending on your platform, you may receive the following warning: and build fails.
   > WARN[0000] The "HOSTTYPE" variable is not set. Defaulting to a blank string.
@@ -122,7 +128,21 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
   ```bash
   echo "HOSTTYPE=$(uname -m)" > ./.env
   ```
-## Conventional build & container launch method without docker-compose
+
+## After launched application
+
+- `docker-compose run` will eventually wait for the next input.
+- Hit "`xtru`" and enter key. The first time you run it, it will stop immediately after some files and directories have been placed in the pre-created `~/sa_home` directory.
+- `~/sa_home/xtru.conf` is one of the most important ones to be placed, and is used to specify the user name, password, and connection string for the Oracle Database.
+- You should open this file with `vim` and replace the value of the keyword **`userid`** shown in the example with a real connection string. The factory default value for `userid` should be set to "ADMIN/ChageToYourSetting@atp_high".
+- The value of the keyword **`src_user`** should also be rewritten to a real schema name. The default value is set to "SH".
+- You close `~/sa_home/xtru.conf` and hit `xtru` again. If all goes well, each table in the specified schema will begin to be exported by `xtru`.
+- If you do not need to watch the process complete, you can always hit **`Ctrl-C`** to abort.
+- The exported data will be output to the `~/sa_home/output` directory. This is specified by the value of the keyword **`output`** in `~/sa_home/xtru.conf`, or you can specify an absolute path.
+- If you give the keyword **`listtable`** a CSV of table names, you can select a target from the tables in the schema. The table name is case sensitive.
+
+
+## Conventional composing method without docker-compose
 
   ```bash
   time docker build --no-cache --progress plain --build-arg UNAME_M=$HOSTTYPE \
