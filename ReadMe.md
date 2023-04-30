@@ -134,7 +134,7 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
 - `docker-compose run` will eventually wait for the next input.
 - Hit "`xtru`" and enter key. The first time you run it, it will stop immediately after some files and directories have been placed in the pre-created `~/sa_home` directory.
 - `~/sa_home/xtru.conf` is one of the most important ones to be placed, and is used to specify the user name, password, and connection string for the Oracle Database.
-- You should open this file with `vim` and replace the value of the keyword **`userid`** shown in the example with a real connection string. The factory default value for `userid` should be set to "ADMIN/ChageToYourSetting@atp_high".
+- You should open this file with `vim` and replace the value of the keyword **`userid`** shown in the example with a real connection string. The factory default value for `userid` is set to "ADMIN/ChageToYourSetting@atp_high".
 - The value of the keyword **`src_user`** should also be rewritten to a real schema name. The default value is set to "SH".
 - You close `~/sa_home/xtru.conf` and hit `xtru` again. If all goes well, each table in the specified schema will begin to be exported by `xtru`.
 - If you do not need to watch the process complete, you can always hit **`Ctrl-C`** to abort.
