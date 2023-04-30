@@ -2,7 +2,7 @@
 
 ## Synopsis
 
-- Extreme Unloader (XTRU) is an app for quick file exporting from Oracle Database.
+- Extreme Unloader (**XTRU**) is an app for quick file exporting from Oracle Database.
 - This app is written in Standard C++11 using Boost C++ libraries and Oracle C++ Call Interface (OCCI) functions.
 - High utilization efficiency for network and memory buffer can expect since it can fetch multiple rows at a time.
 - By allocating threads for each partition in the table, CPU time can be intensively input, so you can fully utilize system scalability and reduce the time required.
@@ -78,7 +78,10 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
   ```bash
   cp $TNS_ADMIN/{sqlnet,tnsnames}.ora ~/tns_admin/
   ```
-- Save a copy of dot files and dot folders valid in your environment to **dotfiles.tar**. Anything saved here will be copied to the $HOME of the application user: "**xtru**" when building the image.
+- Save a copy of dot files and dot folders valid in your environment to **dotfiles.tar**. Anything saved here will be placed to the $HOME of the application user: "**xtru**" when building the image.
+- ".ssh/" is probably necessary if you ever connect to GitHub.
+- Include ".oci/" if you want to be connected with oci form the container.
+- Include ".wallet/" if you want to export from Autonomous Database under the mTLS authentication. 
   ```bash
   cp dotfiles.tar ctx/
   tar -C ~/ -rvf ctx/dotfiles.tar .{oci,ssh,wallet}/
@@ -94,7 +97,6 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
   tar -C ~/ -rvf ctx/dotfiles.tar.gz ./.ssh/known_hosts
   ```
 
-## TODO
 ## How to build and run.
 
 - Storage allocated by docker-compose build can be released.
@@ -108,10 +110,10 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
   ```bash
   docker-compose run --rm builder
   ```
-- About what to expect before you start building:
+- About what to expect before you start building an image:
   - A docker image building (i.e. docker-compose build) depends on specs, but in most cases it takes a few minutes.
   - However, building a container takes longer than that. It may be over when you go out for a haircut and come back.
-  - This is because it will start building the LLVM, Clang, and Boost C++ Libraries (if you haven't done so already).
+  - This is because it will start building the LLVM, Clang, and Boost C++ Libraries (if these have not built so already).
 
 - Depending on your platform, you may receive the following warning: and build fails.
   > WARN[0000] The "HOSTTYPE" variable is not set. Defaulting to a blank string.
@@ -120,16 +122,17 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
   ```bash
   echo "HOSTTYPE=$(uname -m)" > ./.env
   ```
-- (1)
+## Conventional build & container launch method without docker-compose
+
   ```bash
   time docker build --no-cache --progress plain --build-arg UNAME_M=$HOSTTYPE \
     -t xtru-builder ctx |& tee ~/docker_build_1.log
-  docker run -it --rm --hostname xtru_host --name xtru \
+  docker run -it --rm --hostname suitableapp --name dev_xtru \
     -v $PWD/init_container.sh:/usr/local/bin/init_container.sh:ro \
-    -v $PWD/tns_admin:/opt/oracle/tns_admin:ro \
     -v $PWD:/home/xtru/xtru \
-    -v $PWD/rpmbuild:/home/xtru/rpmbuild \
-    -v $PWD/sa_home:/home/xtru/sa_home \
-    -v $PWD/.gitconfig=/home/xtru/.gitconfig \
+    -v $HOME/tns_admin:/opt/oracle/tns_admin:ro \
+    -v $HOME/rpmbuild:/home/xtru/rpmbuild \
+    -v $HOME/sa_home:/home/xtru/sa_home \
+    -v $HOME/.gitconfig=/home/xtru/.gitconfig \
     xtru-builder
   ```

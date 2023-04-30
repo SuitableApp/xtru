@@ -12,6 +12,12 @@ services:
       context:
         ./ctx
 
+    container_name:
+      dev_xtru
+
+    hostname:
+      suitableapp
+
     volumes:
       - $PWD/init_container.sh:/usr/local/bin/init_container.sh:ro
       - $PWD:/home/xtru/xtru
