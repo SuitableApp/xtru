@@ -3,7 +3,7 @@
 
 Summary:       Extreme Unloader
 Name:          xtru
-License:       The customer is granted only the non-exclusive right to use based on the contract
+License:       GPL-3.0+
 Version:       5.3.0
 Release:       2%{?dist}
 Group:         Applications/Databases
@@ -54,7 +54,7 @@ make install CONF=Release prefix=$RPM_BUILD_ROOT/usr/local
 
 %files
 %defattr(-, root, root)
-%doc AUTHORS COPYING ChangeLog INSTALL NEWS ReadMe.md
+%doc AUTHORS COPYING ChangeLog ReadMe.md
 /usr/local/bin/*
 /usr/local/share/%{name}-%{version}/conf.tar
 
