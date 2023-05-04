@@ -8,7 +8,7 @@
 - By allocating threads for each partition in the table, CPU time can be intensively input, so you can fully utilize system scalability and reduce the time required.
 - Optionally, datagrams can be piped to subsequent processes (IPC), reducing the I/O workload to zero.
 - XTRU works so smoothly that it helps to incarnate operational plans that have taken too long and given up.
-- XTRU can output control files for "SQL*Loader" along with flat files, making it easier to transport data.
+- XTRU can output control files for "SQL\*Loader" along with flat files, making it easier to transport data.
 
 
 ## An example of exporting a familiar table
@@ -30,7 +30,7 @@
     00000000607934,~~MILLER~~,~~CLERK~~,7782,~~19820123000000~~,1300,,10,
     ```
 
-- Control file for using SQL*Loader
+- Control file for using SQL\*Loader
     ```plain
     LOAD
     INFILE "SCOTT.EMP.dat" "VAR 10"
@@ -93,7 +93,7 @@
   cp $ORACLE_HOME/network/admin/{sqlnet,tnsnames}.ora ~/tns_admin/
   ```
 
-- Gather copies of the dotfiles and dotfolders that are valid in your environment into **dotfiles.tar**. It already has some commonly used dotfiles (e.g.vimrc, .screenrc).
+- Gather copies of the dotfiles and dotfolders that are valid in your environment into **dotfiles.tar**. It already has some commonly used dotfiles (e.g. .vimrc, .screenrc).
 - Anything saved it will be placed to the $HOME of the application user "**xtru**" when composing the image.
 - ".ssh/" is probably necessary if you ever connect to GitHub.
 - Include ".oci/" if you want to be connected to OCI (Oracle Cloud Infrastructure) form the container.
