@@ -52,7 +52,6 @@ struct cUserObjAuditOpts::tAttributes
 	char szRen[AUD_OPTS_LEN];              ///< Similar to above
 	char szSel[AUD_OPTS_LEN];              ///< Similar to above
 	char szUpd[AUD_OPTS_LEN];              ///< Similar to above
-	char szRef[AUD_OPTS_LEN];              ///< Similar to above
 	char szExe[AUD_OPTS_LEN];              ///< Similar to above
 	char szCre[AUD_OPTS_LEN];              ///< Similar to above
 	char szRea[AUD_OPTS_LEN];              ///< Similar to above
@@ -75,7 +74,6 @@ struct cUserObjAuditOpts::tAttributes
         ::memset(szRen, 0, sizeof(szRen));
         ::memset(szSel, 0, sizeof(szSel));
         ::memset(szUpd, 0, sizeof(szUpd));
-        ::memset(szRef, 0, sizeof(szRef));
         ::memset(szExe, 0, sizeof(szExe));
         ::memset(szCre, 0, sizeof(szCre));
         ::memset(szRea, 0, sizeof(szRea));
@@ -106,7 +104,6 @@ struct cUserObjAuditOpts::tAttributes
             , szRen, rhs.szRen
             , szSel, rhs.szSel
             , szUpd, rhs.szUpd
-            , szRef, rhs.szRef
             , szExe, rhs.szExe
             , szCre, rhs.szCre
             , szRea, rhs.szRea
@@ -153,7 +150,6 @@ struct cUserObjAuditOpts::tAttributes
         vPrtObjAuditStmt(os, "RENAME", szRen);
         vPrtObjAuditStmt(os, "SELECT", szSel);
         vPrtObjAuditStmt(os, "UPDATE", szUpd);
-        vPrtObjAuditStmt(os, "REFERENCE", szRef);  /// Obsoleted
         vPrtObjAuditStmt(os, "EXECUTE", szExe);
         vPrtObjAuditStmt(os, "CREATE", szCre);
         vPrtObjAuditStmt(os, "READ", szRea);
@@ -173,12 +169,12 @@ std::string cUserObjAuditOpts::tAttributes::sDebugPrint() const
             R"(szOwner='%s', szObjectName='%s', szObjectType='%s')"
             R"(, szAlt='%s', szAud='%s', szCom='%s', szDel='%s')"
             R"(, szGra='%s', szInd='%s', szIns='%s', szLoc='%s')"
-            R"(, szRen='%s', szSel='%s', szUpd='%s', szRef='%s')"
+            R"(, szRen='%s', szSel='%s', szUpd='%s')"
             R"(, szExe='%s', szCre='%s', szRea='%s', szWri='%s', szFbk='%s')"
         ) % szOwner % szObjectName % szObjectType
             % szAlt % szAud % szCom % szDel
             % szGra % szInd % szIns % szLoc
-            % szRen % szSel % szUpd % szRef
+            % szRen % szSel % szUpd
             % szExe % szCre % szRea % szWri % szFbk
         ;
     return oss.str();
@@ -258,7 +254,6 @@ cUserObjAuditOpts::cRetriever::cRetriever(
     oDefine_.vAddItem(rTable_->szRen, SQLT_STR, NULL, NULL, NULL, iSkip_);
     oDefine_.vAddItem(rTable_->szSel, SQLT_STR, NULL, NULL, NULL, iSkip_);
     oDefine_.vAddItem(rTable_->szUpd, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szRef, SQLT_STR, NULL, NULL, NULL, iSkip_);
     oDefine_.vAddItem(rTable_->szExe, SQLT_STR, NULL, NULL, NULL, iSkip_);
     oDefine_.vAddItem(rTable_->szCre, SQLT_STR, NULL, NULL, NULL, iSkip_);
     oDefine_.vAddItem(rTable_->szRea, SQLT_STR, NULL, NULL, NULL, iSkip_);
@@ -287,14 +282,14 @@ const char cUserObjAuditOpts::szDbaObjAuditOpts[] = {
 "select owner, object_name, object_type "
 ", alt, aud, com, del "
 ", gra, ind, ins, loc "
-", ren, sel, upd, ref "
+", ren, sel, upd "
 ", exe, cre, rea %s "
 "from dba_obj_audit_opts "
 "where owner in %s "
 "and ("
 	"alt != '-/-' or aud != '-/-' or com != '-/-' or del != '-/-' or "
 	"gra != '-/-' or ind != '-/-' or ins != '-/-' or loc != '-/-' or "
-	"ren != '-/-' or sel != '-/-' or upd != '-/-' or ref != '-/-' or "
+	"ren != '-/-' or sel != '-/-' or upd != '-/-' or "
 	"exe != '-/-' or cre != '-/-' or rea != '-/-' %s "
 ")"
 };
@@ -303,7 +298,7 @@ const char cUserObjAuditOpts::szUserObjAuditOpts[] = {
 "select user, object_name, object_type "
 ", alt, aud, com, del "
 ", gra, ind, ins, loc "
-", ren, sel, upd, ref "
+", ren, sel, upd "
 ", exe, cre, rea %s "
 ""
 "from user_obj_audit_opts "
@@ -311,7 +306,7 @@ const char cUserObjAuditOpts::szUserObjAuditOpts[] = {
 "and ("
 	"alt != '-/-' or aud != '-/-' or com != '-/-' or del != '-/-' or "
 	"gra != '-/-' or ind != '-/-' or ins != '-/-' or loc != '-/-' or "
-	"ren != '-/-' or sel != '-/-' or upd != '-/-' or ref != '-/-' or "
+	"ren != '-/-' or sel != '-/-' or upd != '-/-' or "
 	"exe != '-/-' or cre != '-/-' or rea != '-/-' %s "
 ")"
 };
