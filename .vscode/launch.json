@@ -8,7 +8,7 @@
             "name": "(gdb) xtru",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/mtu",
+            "program": "${workspaceFolder}/build/xtru",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

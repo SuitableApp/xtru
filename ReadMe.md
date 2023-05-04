@@ -46,7 +46,7 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
 ,  "DEPTNO"     DECIMAL EXTERNAL(3)
 )
 ```
-- Factory settings are tuned to produce output in a representation format that maximizes reload performance.
+- Default settings are tuned to produce output in a representation format that maximizes reload performance.
 - CSV, TSV, and fixed-length format can also be selected.
 
 
@@ -58,10 +58,10 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
   | - OCI File Storage     |            40 MiB/s |               |
   | - OCI Block Volume     |            46 MiB/s |        10 VPU |
   | Condition:             |                     |               |
-  | - Segment size (TABLE) |            5,696 MB |               |
+  | - Segment size (TABLE) |            5,696 MB | Unpartitioned |
   | - Number of rows       |          50,000,000 |               |
   | - Average size per row |           165 bytes |               |
-  | - Compute shape        | VM.Standard<br>.A1.Flex | 4 VCPU,<br>24 GB Memory |
+  | - Compute shape        | VM.Standard.A1.Flex | 4 OCPU, 24 GB Memory |
 
 
 # Getting started
@@ -73,7 +73,7 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
   git clone git@github.com:SuitableApp/xtru.git ~/xtru
   cd ~/xtru
   ```
-- Prepair a stage of building RPM packages and a working directory for the application.
+- Prepair a stage of building RPM packages and a working directory for this app.
   ```bash
   mkdir -p ~/{sa_home,rpmbuild,tns_admin}
   chmod a+w ~/{sa_home,rpmbuild}
@@ -87,7 +87,7 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
   cp $ORACLE_HOME/network/admin/{sqlnet,tnsnames}.ora ~/tns_admin/
   ```
 
-- Gather copies of the dotfiles and dotfolders that are valid in your environment into **dotfiles.tar**. It already has some commonly used dotfiles (e.g. vvimrc, .screenrc).
+- Gather copies of the dotfiles and dotfolders that are valid in your environment into **dotfiles.tar**. It already has some commonly used dotfiles (e.g.vimrc, .screenrc).
 - Anything saved it will be placed to the $HOME of the application user "**xtru**" when composing the image.
 - ".ssh/" is probably necessary if you ever connect to GitHub.
 - Include ".oci/" if you want to be connected to OCI (Oracle Cloud Infrastructure) form the container.
@@ -129,30 +129,15 @@ TRUNCATE REENABLE FIELDS TERMINATED BY ','
   echo "HOSTTYPE=$(uname -m)" > ./.env
   ```
 
-## After launched application
+## After launched the container
 
 - `docker-compose run` will eventually wait for the next input.
-- Hit "`xtru`" and enter key. The first time you run it, it will stop immediately after some files and directories have been placed in the pre-created `~/sa_home` directory.
+- Hit "`xtru`" and enter key. When the App is launched for the first time, it will stop immediately after some files and directories have been placed in the pre-created `~/sa_home` directory.
 - `~/sa_home/xtru.conf` is one of the most important ones to be placed, and is used to specify the user name, password, and connection string for the Oracle Database.
 - You should open this file with `vim` and replace the value of the keyword **`userid`** shown in the example with a real connection string. The factory default value for `userid` is set to "ADMIN/ChageToYourSetting@atp_high".
-- The value of the keyword **`src_user`** should also be rewritten to a real schema name. The default value is set to "SH".
-- You close `~/sa_home/xtru.conf` and hit `xtru` again. If all goes well, each table in the specified schema will begin to be exported by `xtru`.
+- The value of the keyword **`src_user`** should also be replaced to a real schema name. The default value is set to "SH".
+- You close `~/sa_home/xtru.conf` and hit `xtru` again. If all goes well, each table in the specified schema will begin to be exported by XTRU.
 - If you do not need to watch the process complete, you can always hit **`Ctrl-C`** to abort.
 - The exported data will be output to the `~/sa_home/output` directory. This is specified by the value of the keyword **`output`** in `~/sa_home/xtru.conf`, or you can specify an absolute path.
 - If you give the keyword **`listtable`** a CSV of table names, you can select a target from the tables in the schema. The table name is case sensitive.
 
-
-## Conventional composing method without docker-compose
-
-  ```bash
-  time docker build --no-cache --progress plain --build-arg UNAME_M=$HOSTTYPE \
-    -t xtru-builder ctx |& tee ~/docker_build_1.log
-  docker run -it --rm --hostname suitableapp --name dev_xtru \
-    -v $PWD/init_container.sh:/usr/local/bin/init_container.sh:ro \
-    -v $PWD:/home/xtru/xtru \
-    -v $HOME/tns_admin:/opt/oracle/tns_admin:ro \
-    -v $HOME/rpmbuild:/home/xtru/rpmbuild \
-    -v $HOME/sa_home:/home/xtru/sa_home \
-    -v $HOME/.gitconfig=/home/xtru/.gitconfig \
-    xtru-builder
-  ```
