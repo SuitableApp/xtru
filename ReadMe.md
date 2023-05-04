@@ -52,16 +52,16 @@
 
 ## Data Sheet
 
-    | Index                  | Measured            | Remarks       |
-    | ---------------------- | -------------------:| -------------:|
-    | Destination:           |                     |               |
-    | - OCI File Storage     |            40 MiB/s |               |
-    | - OCI Block Volume     |            46 MiB/s |        10 VPU |
-    | Condition:             |                     |               |
-    | - Segment size (TABLE) |            5,696 MB | Unpartitioned |
-    | - Number of rows       |          50,000,000 |               |
-    | - Average size per row |           165 bytes |               |
-    | - Compute shape        | VM.Standard.A1.Flex | 4 OCPU, 24 GB Memory |
+  | Index                  | Measured            | Remarks       |
+  | ---------------------- | -------------------:| -------------:|
+  | Destination:           |                     |               |
+  | - OCI File Storage     |            40 MiB/s |               |
+  | - OCI Block Volume     |            46 MiB/s |        10 VPU |
+  | Condition:             |                     |               |
+  | - Segment size (TABLE) |            5,696 MB | Unpartitioned |
+  | - Number of rows       |          50,000,000 |               |
+  | - Average size per row |           165 bytes |               |
+  | - Compute shape        | VM.Standard.A1.Flex | 4 OCPU, 24 GB Memory |
 
 
 # Getting started
@@ -128,11 +128,11 @@
     ```bash
     echo "HOSTTYPE=$(uname -m)" > ./.env
     ```
-  - And rerun the `docker-compose run` above command.
+  - And rerun the `docker-compose run` command above.
 
 - What you need to know before you start creating an image:
   - A docker image building (i.e. docker-compose build) depends on specs, but in most cases it takes a few minutes.
-  - However, lounching a container takes longer than that. It may be over when you go out for a haircut and come back.
+  - However, launching a container takes longer than that. It may be over when you go out for a haircut and come back.
   - And the container requires about 5GB of temporary storage. This can be removed before runtime.
   - This is because it will start building the LLVM, Clang, and Boost C++ Libraries (if these have not built so already).
   - Oracle Database Instant Client 19c will be also downloaded and set up automatically, as it is required for application build and runtime.
