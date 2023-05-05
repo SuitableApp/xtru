@@ -70,7 +70,7 @@
 
 - Clone the repository and move to it.
   ```bash
-  git clone git@github.com:SuitableApp/xtru.git ~/xtru
+  git clone https://github.com/SuitableApp/xtru.git ~/xtru
   cd ~/xtru
   ```
 
@@ -93,7 +93,7 @@
   cp $ORACLE_HOME/network/admin/{sqlnet,tnsnames}.ora ~/tns_admin/
   ```
 
-- Gather copies of the dotfiles and dotfolders that are valid in your environment into **dotfiles.tar**. It already has some commonly used dotfiles (e.g. .vimrc, .screenrc).
+- Gather copies of the dotfiles and dotfolders that are valid in your environment into **dotfiles.tar**. It already has some commonly used dotfiles (e.g. .vimrc).
 - Anything saved it will be placed to the $HOME of the application user "**xtru**" when composing the image.
 - ".ssh/" is probably necessary if you ever connect to GitHub.
 - Include ".oci/" if you want to be connected to OCI (Oracle Cloud Infrastructure) form the container.
@@ -105,6 +105,8 @@
   [user]
      name = your_github_account
      email = your@email.address
+  [pull]
+     rebase = false
   EOF
   ```
 
@@ -149,4 +151,21 @@
 - If you do not need to watch the process complete, you can always hit **`Ctrl-C`** to abort.
 - The exported data will be output to the `~/sa_home/output` directory. This is specified by the value of the keyword **`output`** in `~/sa_home/xtru.conf`, or you can specify an absolute path.
 - If you give the keyword **`listtable`** a CSV of table names, you can select a target from the tables in the schema. The table name is case sensitive.
+
+## Set up and deploy on-premises environments
+
+- On-premises operation is also possible if you can prepare Oracle Linux 8 with some packages (including dependencies) pre-installed.
+- Detailed examples are provided in the "**on-premises**" subfolder.
+
+## Common errors and workarounds
+
+- Caught an exception: ORA-12154: TNS:could not resolve the connect identifier specified <br>
+  std::runtime_error in ps::lib::sql::occi::cSvcDedicatedPool::tOcciConnVect ps::lib::sql::occi::cSvcDedicatedPool::oBuildConn(uint32_t) (lib/sql/occi/cSvc.cpp-221)
+
+   - Set the environment variable TNS_ADMIN and save the sqlnet.ora and tnsnames.ora files valid for your site to the destination indicated by the value.
+
+- Caught an exception: ORA-28759: failure to open file <br>
+  std::runtime_error in ps::lib::sql::occi::cSvcDedicatedPool::tOcciConnVect ps::lib::sql::occi::cSvcDedicatedPool::oBuildConn(uint32_t) (lib/sql/occi/cSvc.cpp-221)
+
+   - The parameter WALLET_LOCATION => SOURCE => DIRECTORY in sqlnet.ora points to an incorrect folder name where the wallet is stored or there is no wallet ('cwallet.sso')..
 

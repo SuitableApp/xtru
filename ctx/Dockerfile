@@ -21,7 +21,7 @@ ENV REPOS            gitlab
 
 RUN dnf -y update && dnf -y install oracle-epel-release-el8 oraclelinux-developer-release-el8 && \
     dnf config-manager --add-repo http://yum.oracle.com/repo/OracleLinux/OL8/developer/EPEL/$MACHINE && \
-    dnf -y install python36-oci-cli dstat rsync screen hostname sudo wget rlwrap vim-enhanced jq mlocate \
+    dnf -y install python36-oci-cli rsync hostname sudo wget rlwrap vim-enhanced jq mlocate \
       git rpmdevtools libcurl-devel ccache p7zip openssl-devel ncurses-devel python3-devel \
       sqlite-devel libunwind-devel rr-testsuite autoconf automake libtool cmake gcc-c++ && \
     dnf clean all
@@ -34,14 +34,6 @@ RUN sed -i /etc/sudoers \
  -e "s/%wheel\tALL=(ALL)\tALL/# %wheel\tALL=(ALL)\tALL/g" \
  -e "s/# %wheel\tALL=(ALL)\tNOPASSWD: ALL/%wheel\tALL=(ALL)\tNOPASSWD: ALL/g"
 
-# Install products of Oracle Corporation
-# Newer packages are available, but These are chosen because they are available for both aarch64 and x86-64.
-RUN wget --directory-prefix=/tmp https://download.oracle.com/otn_software/linux/instantclient/191000/oracle-instantclient$ORA_RELEASE-{basic,sqlplus,devel,tools}-$ORA_RELEASE.$ORA_PATCH_LV.$MACHINE.rpm && \
-    dnf install -y /tmp/oracle-instantclient19.*-*-19*.$MACHINE.rpm && \
-    ln -s /usr/lib/oracle/$ORA_RELEASE/client64/bin/sqlldr /usr/bin/sqlldr && \
-    ln -s /usr/lib/oracle/$ORA_RELEASE/client64/lib/libocci.so.19.1 /usr/lib/oracle/$ORA_RELEASE/client64/lib/libocci.so && \
-    rm -rf /tmp/oracle-instantclient19.*-*-19*.$MACHINE.rpm
-
 # Prepare an environment to maintain development.
 RUN groupadd $DEVELOPER
 RUN useradd -g $DEVELOPER -G wheel $DEVELOPER
@@ -52,10 +44,11 @@ USER $DEVELOPER
 WORKDIR /home/$DEVELOPER
 ADD dotfiles.tar .
 RUN for item in .{oci,ssh,wallet}/ .{bash,screen,vim}rc ; do if [ -e $item ]; then sudo chown -R $DEVELOPER: $item; fi; done
-RUN mkdir -p ~/.vim/autoload/ ~/vim/var/undo/ && \
-    wget --directory-prefix=~/.vim/autoload https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim && \
-    mkdir -p ~/.vim/bundle && \
-    git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+# Use "/home/$DEVELOPER/" instead of "~/"
+RUN mkdir -p /home/$DEVELOPER/.vim/autoload/ /home/$DEVELOPER/vim/var/undo/ && \
+    wget --directory-prefix=/home/$DEVELOPER/.vim/autoload https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim && \
+    mkdir -p /home/$DEVELOPER/.vim/bundle && \
+    git clone https://github.com/Shougo/neobundle.vim /home/$DEVELOPER/.vim/bundle/neobundle.vim
 
 RUN sudo updatedb
 

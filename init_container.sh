@@ -3,6 +3,17 @@
 # Create /home/$DEVELOPER/rpmbuild and subdirectories.
 rpmdev-setuptree 
 
+# Install products of Oracle Corporation
+# Newer packages are available, but These are chosen because they are available for both aarch64 and x86-64.
+
+if [ -z $(rpm -qa oracle-*instantclient*.*-basic) ]; then
+    rm -rf /home/$DEVELOPER/rpmbuild/RPMS/$MACHINE/oracle-instantclient$ORA_RELEASE-{basic,sqlplus,devel,tools}-$ORA_RELEASE.$ORA_PATCH_LV.$MACHINE.rpm
+    wget --directory-prefix=/home/$DEVELOPER/rpmbuild/RPMS/$MACHINE https://download.oracle.com/otn_software/linux/instantclient/191000/oracle-instantclient$ORA_RELEASE-{basic,sqlplus,devel,tools}-$ORA_RELEASE.$ORA_PATCH_LV.$MACHINE.rpm
+    sudo dnf install -y /home/$DEVELOPER/rpmbuild/RPMS/$MACHINE/oracle-instantclient$ORA_RELEASE-*-$ORA_RELEASE.$ORA_PATCH_LV.$MACHINE.rpm
+    sudo ln -s /usr/lib/oracle/$ORA_RELEASE/client64/bin/sqlldr /usr/bin/sqlldr
+    sudo ln -s /usr/lib/oracle/$ORA_RELEASE/client64/lib/libocci.so.19.1 /usr/lib/oracle/$ORA_RELEASE/client64/lib/libocci.so
+fi
+
 cd $WKDIR
 
 # Build and Install dependencies.
