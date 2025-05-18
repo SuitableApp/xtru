@@ -22,9 +22,9 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define LOG_GROUP_TYPE_LEN               (19+1)
-#define ALWAYS_LEN                       (11+1)
-#define NAMETYPE_LEN                     (14+1)
+constexpr size_t LOG_GROUP_TYPE_LEN = 19+1;
+constexpr size_t ALWAYS_LEN = 11+1;
+constexpr size_t NAMETYPE_LEN = 14+1;
 
 namespace ps
 {
@@ -219,12 +219,12 @@ cAllLogGroups::cRetriever::cRetriever(
         , sGetSqlInList(oOwners)
     });
     // Inbounding data from Oracle.
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szLogGroupName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szLogGroupType, SQLT_STR, &rTable_->nLogGroupTypeInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szAlways, SQLT_STR, &rTable_->nAlwaysInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szGenerated, SQLT_STR, &rTable_->nGeneratedInd, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szLogGroupName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szLogGroupType, SQLT_STR, &rTable_->nLogGroupTypeInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szAlways, SQLT_STR, &rTable_->nAlwaysInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szGenerated, SQLT_STR, &rTable_->nGeneratedInd, nullptr, nullptr, iSkip_);
 }
 
 void cAllLogGroups::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)
