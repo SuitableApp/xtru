@@ -22,11 +22,11 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define DEL_RULE_LEN         (9+1)
-#define DEFERRABLE_LEN      (14+1)
-#define DEFERRERD_LEN        (9+1)
-#define VALIDATED_LEN       (13+1)
-#define GENETATED_LEN       (14+1)
+constexpr size_t DEL_RULE_LEN = 9+1;
+constexpr size_t DEFERRABLE_LEN = 14+1;
+constexpr size_t DEFERRERD_LEN = 9+1;
+constexpr size_t VALIDATED_LEN = 13+1;
+constexpr size_t GENETATED_LEN = 14+1;
 
 namespace ps
 {
@@ -207,16 +207,16 @@ cConsOfFKey::cRetriever::cRetriever(
     // Replacing "%s" in the SQL with string values.
     this->vConvPlaceHolder({ sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szConstraintName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szRTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szRConstraintName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDeleteRule, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDeferrable, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDeferred, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szValidated, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szGenerated, SQLT_STR, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szConstraintName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szRTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szRConstraintName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDeleteRule, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDeferrable, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDeferred, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szValidated, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szGenerated, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
 }
 
 void cConsOfFKey::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)
