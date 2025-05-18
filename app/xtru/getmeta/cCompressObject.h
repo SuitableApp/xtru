@@ -21,8 +21,8 @@
 
 #pragma once
 
-#define COMPRES_LEN    8+1
-#define COMPFOR_LEN   18+1
+constexpr size_t COMPRES_LEN = 8+1;
+constexpr size_t COMPFOR_LEN = 18+1;
 
 namespace ps
 {
