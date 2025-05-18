@@ -22,10 +22,10 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define UNIQUENESS_LEN          (10+1)
-#define INDEX_TYPE_LEN          (27+1)
-#define LOGGING_TYPE_LEN         (7+1)
-#define PARTITIONED_LEN          (3+1)
+constexpr size_t UNIQUENESS_LEN = 10+1;
+constexpr size_t INDEX_TYPE_LEN = 27+1;
+constexpr size_t LOGGING_TYPE_LEN = 7+1;
+constexpr size_t PARTITIONED_LEN = 3+1;
 
 namespace ps
 {
@@ -496,26 +496,26 @@ cUserIndexes::cRetriever::cRetriever(
         , sGetSqlInList(oOwners)
     });
     // Inbounding data from Oracle.
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szIndexName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szUniqueness, SQLT_STR, &rTable_->nUniquenessInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szIndexType, SQLT_STR, &rTable_->nIndexTypeInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iPctThreshold, SQLT_UIN, &rTable_->nPctThresholdInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iIncludeColumn, SQLT_UIN, &rTable_->nIncludeColumnInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iPctFree, SQLT_UIN, &rTable_->nPctFreeInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iIniTrans, SQLT_UIN, &rTable_->nIniTransInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iMaxTrans, SQLT_UIN, &rTable_->nMaxTransInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szLogging, SQLT_STR, &rTable_->nLoggingInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iPctIncrease, SQLT_UIN, &rTable_->nPctIncreaseInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iFreelists, SQLT_UIN, &rTable_->nFreelistsInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iFreelistGroups, SQLT_UIN, &rTable_->nFreelistGroupsInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szBufferPool, SQLT_STR, &rTable_->nBufferPoolInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTablespaceName, SQLT_STR, &rTable_->nTablespaceNameInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDegree, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szInstances, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szPartitioned, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szConstraintName, SQLT_STR, &rTable_->nConstraintNameInd, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szIndexName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szUniqueness, SQLT_STR, &rTable_->nUniquenessInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szIndexType, SQLT_STR, &rTable_->nIndexTypeInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iPctThreshold, SQLT_UIN, &rTable_->nPctThresholdInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iIncludeColumn, SQLT_UIN, &rTable_->nIncludeColumnInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iPctFree, SQLT_UIN, &rTable_->nPctFreeInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iIniTrans, SQLT_UIN, &rTable_->nIniTransInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iMaxTrans, SQLT_UIN, &rTable_->nMaxTransInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szLogging, SQLT_STR, &rTable_->nLoggingInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iPctIncrease, SQLT_UIN, &rTable_->nPctIncreaseInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iFreelists, SQLT_UIN, &rTable_->nFreelistsInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iFreelistGroups, SQLT_UIN, &rTable_->nFreelistGroupsInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szBufferPool, SQLT_STR, &rTable_->nBufferPoolInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTablespaceName, SQLT_STR, &rTable_->nTablespaceNameInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDegree, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szInstances, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szPartitioned, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szConstraintName, SQLT_STR, &rTable_->nConstraintNameInd, nullptr, nullptr, iSkip_);
 }
 
 void cUserIndexes::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)
