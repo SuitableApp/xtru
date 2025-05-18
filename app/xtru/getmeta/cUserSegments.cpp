@@ -22,9 +22,9 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define UNLIMITED_EXTENTS  INT_MAX-3 /// Number of maximum extent.
-#define SEGMENT_NAME_LEN   81+1      /// Size of segment name.
-#define MAX_EXTENTS_LEN    12
+constexpr int UNLIMITED_EXTENTS = INT_MAX-3; /// Number of maximum extent.
+constexpr size_t SEGMENT_NAME_LEN = 81+1;      /// Size of segment name.
+constexpr size_t MAX_EXTENTS_LEN = 12;
 
 namespace ps
 {
@@ -315,20 +315,20 @@ cUserSegments::cRetriever::cRetriever(
     // Replacing "%s" in the SQL with string values.
     this->vConvPlaceHolder({ sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szSegmentName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szPartitionName, SQLT_STR, &rTable_->nPartitionNameInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szSegmentType, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTablespaceName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->ikBytes, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->ikInitialExtent, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->ikNextExtent, SQLT_UIN, &rTable_->nkNextExtentInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iMinExtents, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iMaxExtents, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iPctIncrease, SQLT_UIN, &rTable_->nPctIncreaseInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iFreelists, SQLT_UIN, &rTable_->nFreelistsInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iFreelistGroups, SQLT_UIN, &rTable_->nFreelistGroupsInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szBufferPool, SQLT_STR, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szSegmentName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szPartitionName, SQLT_STR, &rTable_->nPartitionNameInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szSegmentType, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTablespaceName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->ikBytes, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->ikInitialExtent, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->ikNextExtent, SQLT_UIN, &rTable_->nkNextExtentInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iMinExtents, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iMaxExtents, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iPctIncrease, SQLT_UIN, &rTable_->nPctIncreaseInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iFreelists, SQLT_UIN, &rTable_->nFreelistsInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iFreelistGroups, SQLT_UIN, &rTable_->nFreelistGroupsInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szBufferPool, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
 }
 
 void cUserSegments::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)
