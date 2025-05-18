@@ -22,11 +22,11 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define STATUS_LEN           (8+1)
-#define DEFERRABLE_LEN      (14+1)
-#define DEFERRERD_LEN        (9+1)
-#define VALIDATED_LEN       (13+1)
-#define GENETATED_LEN       (14+1)
+constexpr size_t STATUS_LEN = 8+1;
+constexpr size_t DEFERRABLE_LEN = 14+1;
+constexpr size_t DEFERRERD_LEN = 9+1;
+constexpr size_t VALIDATED_LEN = 13+1;
+constexpr size_t GENETATED_LEN = 14+1;
 
 namespace ps
 {
@@ -269,16 +269,16 @@ cConsOfCheck::cRetriever::cRetriever(
     this->vConvPlaceHolder({ sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
     oDefine_.vSetTiming(ps::lib::sql::occi::cDefine::tTiming::iOnce); // NOTE: default is iRepeat
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szConstraintName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szStatus, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDeferrable, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDeferred, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szValidated, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szGenerated, SQLT_STR, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szConstraintName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szStatus, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDeferrable, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDeferred, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szValidated, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szGenerated, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(SB4MAXVAL, SQLT_CHR, OCI_DYNAMIC_FETCH
-        , ps::lib::sql::occi::cPieceVct::iCbkFunc, (void*) &pv_
+        , ps::lib::sql::occi::cPieceVct::iCbkFunc, static_cast<void*>(&pv_)
     );
 }
 
