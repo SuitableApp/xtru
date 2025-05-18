@@ -22,7 +22,7 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define COMPOSITE_TYP_LEN         (3+1)
+constexpr size_t COMPOSITE_TYP_LEN = 3+1;
 
 namespace ps
 {
@@ -309,17 +309,17 @@ cAllIndPartitions::cRetriever::cRetriever(
     });
     // Inbounding data from Oracle.
     oDefine_.vSetTiming(ps::lib::sql::occi::cDefine::tTiming::iOnce); // NOTE: default is iRepeat
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szIndexName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szComposite, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szPartitionName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iSubpartitionCount, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iPartitionPosition, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTablespaceName, SQLT_STR, &rTable_->nTablespaceNameInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szGenerated, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szCompression, SQLT_STR, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szIndexName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szComposite, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szPartitionName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iSubpartitionCount, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iPartitionPosition, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTablespaceName, SQLT_STR, &rTable_->nTablespaceNameInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szGenerated, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szCompression, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(SB4MAXVAL, SQLT_CHR, OCI_DYNAMIC_FETCH
-        , ps::lib::sql::occi::cPieceVct::iCbkFunc, (void*) &pv_
+        , ps::lib::sql::occi::cPieceVct::iCbkFunc, static_cast<void*>(&pv_)
     );
 }
 
