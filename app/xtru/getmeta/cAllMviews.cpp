@@ -22,13 +22,13 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define UPDATABLE_LEN               (1+1)
-#define REWRITABLE_LEN              (1+1)
-#define REFMODE_LEN                 (6+1)
-#define REFMETHOD_LEN               (8+1)
-#define REFWITH_LEN                (11+1)
-#define BUILDMODE_LEN               (9+1)
-#define USE_NO_INDEX_LEN            (1+1)
+constexpr size_t UPDATABLE_LEN = 1+1;
+constexpr size_t REWRITABLE_LEN = 1+1;
+constexpr size_t REFMODE_LEN = 6+1;
+constexpr size_t REFMETHOD_LEN = 8+1;
+constexpr size_t REFWITH_LEN = 11+1;
+constexpr size_t BUILDMODE_LEN = 9+1;
+constexpr size_t USE_NO_INDEX_LEN = 1+1;
 
 namespace ps
 {
@@ -349,7 +349,7 @@ cAllMviews::cRetriever::cRetriever(
     oDefine_.vAddItem(rTable_->szConstraintName, SQLT_STR, &rTable_->nConstraintNameInd, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(rTable_->iLevel, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(SB4MAXVAL, SQLT_CHR, OCI_DYNAMIC_FETCH
-        , ps::lib::sql::occi::cPieceVct::iCbkFunc, (void*) &pv_
+        , ps::lib::sql::occi::cPieceVct::iCbkFunc, static_cast<void*>(&pv_)
     );
 }
 
