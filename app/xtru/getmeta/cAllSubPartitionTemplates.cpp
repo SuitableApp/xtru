@@ -226,13 +226,13 @@ cAllSubPartitionTemplates::cRetriever::cRetriever(
     });
     // Inbounding data from Oracle.
     oDefine_.vSetTiming(ps::lib::sql::occi::cDefine::tTiming::iOnce); // NOTE: default is iRepeat
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szSubPartitionName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iSubPartitionPosition, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTablespaceName, SQLT_STR, &rTable_->nTablespaceNameInd, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szSubPartitionName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iSubPartitionPosition, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTablespaceName, SQLT_STR, &rTable_->nTablespaceNameInd, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(SB4MAXVAL, SQLT_CHR, OCI_DYNAMIC_FETCH
-        , ps::lib::sql::occi::cPieceVct::iCbkFunc, (void*) &pv_
+        , ps::lib::sql::occi::cPieceVct::iCbkFunc, static_cast<void*>(&pv_)
     );
 }
 
