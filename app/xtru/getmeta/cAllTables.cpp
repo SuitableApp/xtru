@@ -383,29 +383,29 @@ cAllTables::cRetriever::cRetriever(
         , sGetSqlInList(oOwners)
     });
     // Inbounding data from Oracle.
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szPartitioned, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szClusterName, SQLT_STR, &rTable_->nClusterNameInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szIotName, SQLT_STR, &rTable_->nIotNameInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iPctFree, SQLT_UIN, &rTable_->nPctFreeInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iPctUsed, SQLT_UIN, &rTable_->nPctUsedInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iIniTrans, SQLT_UIN, &rTable_->nIniTransInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iMaxTrans, SQLT_UIN, &rTable_->nMaxTransInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szLogging, SQLT_STR, &rTable_->nLoggingInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iPctIncrease, SQLT_UIN, &rTable_->nPctIncreaseInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iFreelists, SQLT_UIN, &rTable_->nFreelistsInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iFreelistGroups, SQLT_UIN, &rTable_->nFreelistGroupsInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szBufferPool, SQLT_STR, &rTable_->nBufferPoolInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDegree, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szInstances, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szCache, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szIotType, SQLT_STR, &rTable_->nIotTypeInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTablespaceName, SQLT_STR, &rTable_->nTablespaceNameInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szRowMovement, SQLT_STR, &rTable_->nRowMovementInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szCompression, SQLT_STR, &rTable_->nCompressionInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szCompressFor, SQLT_STR, &rTable_->nCompressForInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szSnapName, SQLT_STR, &rTable_->nSnapNameInd, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szPartitioned, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szClusterName, SQLT_STR, &rTable_->nClusterNameInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szIotName, SQLT_STR, &rTable_->nIotNameInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iPctFree, SQLT_UIN, &rTable_->nPctFreeInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iPctUsed, SQLT_UIN, &rTable_->nPctUsedInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iIniTrans, SQLT_UIN, &rTable_->nIniTransInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iMaxTrans, SQLT_UIN, &rTable_->nMaxTransInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szLogging, SQLT_STR, &rTable_->nLoggingInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iPctIncrease, SQLT_UIN, &rTable_->nPctIncreaseInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iFreelists, SQLT_UIN, &rTable_->nFreelistsInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iFreelistGroups, SQLT_UIN, &rTable_->nFreelistGroupsInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szBufferPool, SQLT_STR, &rTable_->nBufferPoolInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDegree, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szInstances, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szCache, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szIotType, SQLT_STR, &rTable_->nIotTypeInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTablespaceName, SQLT_STR, &rTable_->nTablespaceNameInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szRowMovement, SQLT_STR, &rTable_->nRowMovementInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szCompression, SQLT_STR, &rTable_->nCompressionInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szCompressFor, SQLT_STR, &rTable_->nCompressForInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szSnapName, SQLT_STR, &rTable_->nSnapNameInd, nullptr, nullptr, iSkip_);
 
 }
 
