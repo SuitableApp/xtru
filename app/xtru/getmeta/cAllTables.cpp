@@ -22,10 +22,10 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define MINIMUM_INI_TRANS           2
-#define LOGGING_TYPE_LEN         (7+1)
-#define CACHE_TYPE_LEN           (1+1)
-#define ROW_MOVEMENT_LEN         (8+1)
+constexpr int MINIMUM_INI_TRANS = 2;
+constexpr size_t LOGGING_TYPE_LEN = 7+1;
+constexpr size_t CACHE_TYPE_LEN = 1+1;
+constexpr size_t ROW_MOVEMENT_LEN = 8+1;
 
 namespace ps
 {
