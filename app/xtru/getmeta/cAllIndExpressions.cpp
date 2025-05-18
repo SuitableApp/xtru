@@ -22,7 +22,7 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define DESCNEND_TYP_LEN        (4+1)
+constexpr size_t DESCNEND_TYP_LEN = 4+1;
 
 namespace ps
 {
@@ -198,13 +198,13 @@ cAllIndExpressions::cRetriever::cRetriever(
     this->vConvPlaceHolder({ sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
     oDefine_.vSetTiming(ps::lib::sql::occi::cDefine::tTiming::iOnce); // NOTE: default is iRepeat
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szIndexName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDescend, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iColumnPosition, SQLT_UIN, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szIndexName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDescend, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iColumnPosition, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(SB4MAXVAL, SQLT_CHR, OCI_DYNAMIC_FETCH
-        , ps::lib::sql::occi::cPieceVct::iCbkFunc, (void*) &pv_
+        , ps::lib::sql::occi::cPieceVct::iCbkFunc, static_cast<void*>(&pv_)
     );
 }
 
