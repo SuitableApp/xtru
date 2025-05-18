@@ -22,11 +22,11 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define TIMESTAMP_LEN     19+1
-#define AUDIT_ACTION_LEN  28+1
-#define PRIV_USED_LEN     48+1
-#define OS_USER_NAME_LEN  28+1
-#define USER_HOST_LEN     40+1
+constexpr size_t TIMESTAMP_LEN = 19+1;
+constexpr size_t AUDIT_ACTION_LEN = 28+1;
+constexpr size_t PRIV_USED_LEN = 48+1;
+constexpr size_t OS_USER_NAME_LEN = 28+1;
+constexpr size_t USER_HOST_LEN = 40+1;
 
 namespace ps
 {
@@ -213,19 +213,19 @@ cUserAuditObject::cRetriever::cRetriever(
     // Outbounding data to Oracle.
     oBind_.vAddItem(":b_numdays", &iNumdays);
     // Inbounding data from Oracle.
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szObjectName, SQLT_STR, &rTable_->nObjectNameInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iTypeIdx, SQLT_INT, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szOName, SQLT_STR, &rTable_->nONameInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTimestamp, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iSessionId, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iEntryId, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szActionName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iReturnCode, SQLT_INT, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szUserName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szPrivUsed, SQLT_STR, &rTable_->nPrivUsedInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szOsUserName, SQLT_STR, &rTable_->nOsUserNameInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szUserHost, SQLT_STR, &rTable_->nUserHostInd, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szObjectName, SQLT_STR, &rTable_->nObjectNameInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iTypeIdx, SQLT_INT, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szOName, SQLT_STR, &rTable_->nONameInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTimestamp, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iSessionId, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iEntryId, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szActionName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iReturnCode, SQLT_INT, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szUserName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szPrivUsed, SQLT_STR, &rTable_->nPrivUsedInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szOsUserName, SQLT_STR, &rTable_->nOsUserNameInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szUserHost, SQLT_STR, &rTable_->nUserHostInd, nullptr, nullptr, iSkip_);
 }
 
 void cUserAuditObject::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)
