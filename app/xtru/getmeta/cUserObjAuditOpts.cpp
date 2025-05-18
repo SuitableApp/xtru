@@ -22,7 +22,7 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define AUD_OPTS_LEN           3+1
+constexpr size_t AUD_OPTS_LEN = 3+1;
 
 namespace ps
 {
