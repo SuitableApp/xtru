@@ -22,13 +22,13 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define  MINIMUM_DTYPE_LENGTH   15
+constexpr size_t MINIMUM_DTYPE_LENGTH = 15;
 
-#define DATA_TYPE_LEN        106+1 // Length of name of Oracle external data type.
-#define CHAR_USED_LEN          1+1
-#define NULLABLE_LEN           1+1
-#define VIRTUAL_COLUMN_LEN     3+1
-#define DATA_DEFAULT_LEN    1024+1
+constexpr size_t DATA_TYPE_LEN = 106+1; // Length of name of Oracle external data type.
+constexpr size_t CHAR_USED_LEN = 1+1;
+constexpr size_t NULLABLE_LEN = 1+1;
+constexpr size_t VIRTUAL_COLUMN_LEN = 3+1;
+constexpr size_t DATA_DEFAULT_LEN = 1024+1;
 
 namespace ps
 {
