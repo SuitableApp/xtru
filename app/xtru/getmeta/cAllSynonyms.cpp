@@ -22,7 +22,7 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define DBLINK_NAME_LEN   128+1
+constexpr size_t DBLINK_NAME_LEN = 128+1;
 
 namespace ps
 {
@@ -188,11 +188,11 @@ cAllSynonyms::cRetriever::cRetriever(
     // Replacing "%s" in the SQL with string values.
     this->vConvPlaceHolder({ sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szSynonymName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableOwner, SQLT_STR, &rTable_->nTableOwnerInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDbLink, SQLT_STR, &rTable_->nDbLinkInd, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szSynonymName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableOwner, SQLT_STR, &rTable_->nTableOwnerInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDbLink, SQLT_STR, &rTable_->nDbLinkInd, nullptr, nullptr, iSkip_);
 }
 
 void cAllSynonyms::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)
