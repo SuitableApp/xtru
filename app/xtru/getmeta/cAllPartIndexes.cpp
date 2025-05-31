@@ -325,15 +325,15 @@ cAllPartIndexes::cRetriever::cRetriever(
     oDefine_.vAddItem(rTable_->szLocality, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(rTable_->szAlignment, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(rTable_->szDefTablespaceName, SQLT_STR, &rTable_->nDefTablespaceNameInd, nullptr, nullptr, iSkip_);
-    oDefine_.vAddItem(rTable_->iDefInitialExtent, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iDefNextExtent, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iDefMinExtents, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iDefMaxExtents, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iDefPctIncrease, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iDefFreelists, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iDefFreelistGroups, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDefBufferPool, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szInterval, SQLT_STR, &rTable_->nIntervalInd, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->iDefInitialExtent, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iDefNextExtent, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iDefMinExtents, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iDefMaxExtents, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iDefPctIncrease, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iDefFreelists, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iDefFreelistGroups, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDefBufferPool, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szInterval, SQLT_STR, &rTable_->nIntervalInd, nullptr, nullptr, iSkip_);
 }
 
 void cAllPartIndexes::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)
