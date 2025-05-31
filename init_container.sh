@@ -7,9 +7,9 @@ rpmdev-setuptree
 # Newer packages are available, but These are chosen because they are available for both aarch64 and x86-64.
 
 if [ -z $(rpm -qa oracle-*instantclient*.*-basic) ]; then
-    rm -rf /home/$DEVELOPER/rpmbuild/RPMS/$MACHINE/oracle-instantclient$ORA_RELEASE-{basic,sqlplus,devel,tools}-$ORA_RELEASE.$ORA_PATCH_LV.$MACHINE.rpm
-    wget --directory-prefix=/home/$DEVELOPER/rpmbuild/RPMS/$MACHINE https://download.oracle.com/otn_software/linux/instantclient/2380000/oracle-instantclient$ORA_RELEASE-{basic,sqlplus,devel,tools}-$ORA_RELEASE.$ORA_PATCH_LV.el9.$MACHINE.rpm
-    sudo dnf install -y /home/$DEVELOPER/rpmbuild/RPMS/$MACHINE/oracle-instantclient$ORA_RELEASE-*-$ORA_RELEASE.$ORA_PATCH_LV.$MACHINE.rpm
+    rm -rf /home/$DEVELOPER/rpmbuild/RPMS/$MACHINE/oracle-instantclient-{basic,sqlplus,devel,tools}-23.8.0.25.04-1.el9.$MACHINE.rpm
+    wget --directory-prefix=/home/$DEVELOPER/rpmbuild/RPMS/$MACHINE https://download.oracle.com/otn_software/linux/instantclient/2380000/oracle-instantclient-{basic,sqlplus,devel,tools}-23.8.0.25.04-1.el9.$MACHINE.rpm
+    sudo dnf install -y /home/$DEVELOPER/rpmbuild/RPMS/$MACHINE/oracle-instantclient-*-23.8.0.25.04-1.el9.$MACHINE.rpm
     sudo ln -s /usr/lib/oracle/$ORA_RELEASE/client64/bin/sqlldr /usr/bin/sqlldr
     sudo ln -s /usr/lib/oracle/$ORA_RELEASE/client64/lib/libocci.so.23.1 /usr/lib/oracle/$ORA_RELEASE/client64/lib/libocci.so
 fi
