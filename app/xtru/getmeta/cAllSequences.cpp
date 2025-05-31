@@ -22,8 +22,8 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define MINMAX_VALUE_LEN 28+1
-#define CYCLEFLG_LEN      1+1
+constexpr size_t MINMAX_VALUE_LEN = 28+1;
+constexpr size_t CYCLEFLG_LEN = 1+1;
 
 namespace ps
 {
@@ -295,15 +295,15 @@ cAllSequences::cRetriever::cRetriever(
     // Replacing "%s" in the SQL with string values.
     this->vConvPlaceHolder({ sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szSequenceName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szMinValue, SQLT_STR, &rTable_->nMinValueInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szMaxValue, SQLT_STR, &rTable_->nMaxValueInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->lIncrementBy, SQLT_INT, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szCycleFlag, SQLT_STR, &rTable_->nCycleFlagInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szOrderFlag, SQLT_STR, &rTable_->nOrderFlagInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->lCacheSize, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szLastNumber, SQLT_STR, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szSequenceName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szMinValue, SQLT_STR, &rTable_->nMinValueInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szMaxValue, SQLT_STR, &rTable_->nMaxValueInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->lIncrementBy, SQLT_INT, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szCycleFlag, SQLT_STR, &rTable_->nCycleFlagInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szOrderFlag, SQLT_STR, &rTable_->nOrderFlagInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->lCacheSize, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szLastNumber, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
 }
 
 void cAllSequences::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)
