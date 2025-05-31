@@ -22,10 +22,10 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define UNLIMITED_EXTENTS  (INT_MAX-3)
-#define PARTNING_TYPE_LEN        (9+1)
-#define LOGGING_TYPE_LEN         (7+1)
-#define INTERVAL_LEN          (1000+1)
+constexpr int UNLIMITED_EXTENTS = INT_MAX-3;
+constexpr size_t PARTNING_TYPE_LEN = 9+1;
+constexpr size_t LOGGING_TYPE_LEN = 7+1;
+constexpr size_t INTERVAL_LEN = 1000+1;
 
 namespace ps
 {
@@ -387,32 +387,32 @@ cAllPartTables::cRetriever::cRetriever(
         , sGetSqlInList(oOwners)
     });
     // Inbounding data from Oracle.
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szPartitioningType, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szSubpartitioningType, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iPartitionCount, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iDefSubpartitionCount, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iPartitioningKeyCount, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iSubpartitioningKeyCount, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDefTablespaceName, SQLT_STR, &rTable_->nDefTablespaceNameInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iPctFree, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iPctUsed, SQLT_UIN, &rTable_->nPctUsedInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iIniTrans, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iMaxTrans, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szLogging, SQLT_STR, &rTable_->nLoggingInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iDefInitialExtent, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iDefNextExtent, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iDefMinExtents, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iDefMaxExtents, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iDefPctIncrease, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iDefFreelists, SQLT_UIN, &rTable_->nDefFreelists, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iDefFreelistGroups, SQLT_UIN, &rTable_->nDefFreelistGroups, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDefCompression, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDefCompressFor, SQLT_STR, &rTable_->nDefCompressForInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDefBufferPool, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szRefPtnConstraintName, SQLT_STR, &rTable_->nRefPtnConstraintNameInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szInterval, SQLT_STR, &rTable_->nIntervalInd, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szPartitioningType, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szSubpartitioningType, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iPartitionCount, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iDefSubpartitionCount, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iPartitioningKeyCount, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iSubpartitioningKeyCount, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDefTablespaceName, SQLT_STR, &rTable_->nDefTablespaceNameInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iPctFree, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iPctUsed, SQLT_UIN, &rTable_->nPctUsedInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iIniTrans, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iMaxTrans, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szLogging, SQLT_STR, &rTable_->nLoggingInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iDefInitialExtent, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iDefNextExtent, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iDefMinExtents, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iDefMaxExtents, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iDefPctIncrease, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iDefFreelists, SQLT_UIN, &rTable_->nDefFreelists, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iDefFreelistGroups, SQLT_UIN, &rTable_->nDefFreelistGroups, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDefCompression, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDefCompressFor, SQLT_STR, &rTable_->nDefCompressForInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDefBufferPool, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szRefPtnConstraintName, SQLT_STR, &rTable_->nRefPtnConstraintNameInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szInterval, SQLT_STR, &rTable_->nIntervalInd, nullptr, nullptr, iSkip_);
 }
 
 void cAllPartTables::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)
