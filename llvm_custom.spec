@@ -1,6 +1,6 @@
 %define debug_package %{nil}
 %define dist .el9
-%define org_version 20.1.0
+%define org_version 18.1.8
 %undefine __arch_install_post
 
 
@@ -13,9 +13,7 @@ Group:         Development/Tools
 Packager:      XTRU product development department <support@suitableapp.com>
 Vendor:        SuitableApp
 URL:           https://llvm.org/
-Source0:       https://github.com/llvm/llvm-project/releases/download/llvmorg-%{org_version}/llvm-%{org_version}.src.tar.xz
-Source1:       https://github.com/llvm/llvm-project/releases/download/llvmorg-%{org_version}/clang-%{org_version}.src.tar.xz
-Source2:       https://github.com/llvm/llvm-project/releases/download/llvmorg-%{org_version}/lld-%{org_version}.src.tar.xz
+Source0:       https://github.com/llvm/llvm-project/releases/download/llvmorg-%{org_version}/llvm-project-%{org_version}.src.tar.xz
 BuildRequires: cmake
 BuildRequires: zlib-devel
 BuildRequires: ncurses-devel
@@ -30,18 +28,26 @@ languages. The compiler infrastructure includes mirror sets of programming
 tools as well as libraries with equivalent functionality.
 
 %prep
-%setup -q -a 1 -a 2 -n %{name}-%{version} -c
-mv clang-%{org_version}.src llvm-%{org_version}.src/tools/clang
-mv lld-%{org_version}.src llvm-%{org_version}.src/tools/lld
+%setup -q -n llvm-project-%{org_version}.src
 
 %build
-cmake -G "Unix Makefiles" -DCMAKE_CXX_FLAGS="-w" -DCMAKE_BUILD_TYPE="Release" \
+mkdir build
+cd build
+cmake -G "Unix Makefiles" \
+ -DCMAKE_BUILD_TYPE="Release" \
+ -DCMAKE_INSTALL_PREFIX="/usr/local" \
+ -DCMAKE_CXX_FLAGS="-w" \
  -DLLVM_PARALLEL_LINK_JOBS="1" \
  -DLLVM_INCLUDE_BENCHMARKS=OFF \
- -DLLVM_TARGETS_TO_BUILD="X86;AArch64" llvm-%{org_version}.src
+ -DLLVM_INCLUDE_TESTS=OFF \
+ -DLLVM_INCLUDE_EXAMPLES=OFF \
+ -DLLVM_TARGETS_TO_BUILD="X86;AArch64" \
+ -DLLVM_ENABLE_PROJECTS="clang;lld" \
+ ../llvm
 make %{?_smp_mflags}
 
 %install
+cd build
 %make_install DESTDIR=$RPM_BUILD_ROOT
 %py3_shebang_fix \
   %{buildroot}/usr/local/share \

@@ -34,19 +34,27 @@ sed -i "s/using gcc/using gcc : : : <cxxflags>\"-Wno-unused-variable -Wno-deprec
 ./b2 -a -q %{?_smp_mflags} --layout=tagged address-model=64 stage
 
 %install
-%{__install} -m755 -d $RPM_BUILD_ROOT/usr/local/lib $RPM_BUILD_ROOT/usr/local/include/boost
-%{__install} -m755 stage/lib/libboost_*.a stage/lib/libboost_*.so* $RPM_BUILD_ROOT/usr/local/lib/
-cp -R stage/lib/cmake $RPM_BUILD_ROOT/usr/local/lib/
+%{__install} -m755 -d $RPM_BUILD_ROOT/usr/local/lib $RPM_BUILD_ROOT/usr/local/include/boost $RPM_BUILD_ROOT/usr/local/lib/cmake
+%{__install} -m755 stage/lib/libboost_*.a $RPM_BUILD_ROOT/usr/local/lib/
+%{__install} -m755 stage/lib/libboost_*.so.*.*.* $RPM_BUILD_ROOT/usr/local/lib/
+cp -R stage/lib/cmake/* $RPM_BUILD_ROOT/usr/local/lib/cmake/
 chmod a-x $RPM_BUILD_ROOT/usr/local/lib/libboost_*.a
 cp -R boost/* $RPM_BUILD_ROOT/usr/local/include/boost
+# Create symlinks for .so files without duplicating build-ids
+cd $RPM_BUILD_ROOT/usr/local/lib
+for lib in libboost_*.so.*.*.*; do
+    base=$(echo $lib | sed 's/\.so\..*/.so/')
+    ln -sf $lib $base
+done
 
 %clean
 [ "$RPM_BUILD_ROOT" != / ] && rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-, root, root)
-/usr/local/lib/libboost_*.*
-/usr/local/include/boost/*
+/usr/local/lib/libboost_*
+/usr/local/lib/cmake
+/usr/local/include/boost
 %doc
 
 %changelog
