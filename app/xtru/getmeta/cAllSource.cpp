@@ -22,7 +22,7 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define TEXT_LEN   4000+1
+constexpr size_t TEXT_LEN = 4000+1;
 
 namespace ps
 {
@@ -162,11 +162,11 @@ cAllSource::cRetriever::cRetriever(
     // Replacing "%s" in the SQL with string values.
     this->vConvPlaceHolder({ sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szType, SQLT_STR, NULL, &rTable_->iTypeLen, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iLine, SQLT_INT, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szText, SQLT_STR, NULL, &rTable_->iTextSize, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szType, SQLT_STR, nullptr, &rTable_->iTypeLen, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iLine, SQLT_INT, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szText, SQLT_STR, nullptr, &rTable_->iTextSize, nullptr, iSkip_);
 }
 
 void cAllSource::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)

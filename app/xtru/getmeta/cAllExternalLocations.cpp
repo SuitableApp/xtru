@@ -22,8 +22,8 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define OWNER_NAME_LEN               (3+1)
-#define LOCATION_LEN              (4000+1)
+constexpr size_t OWNER_NAME_LEN = 3+1;
+constexpr size_t LOCATION_LEN = 4000+1;
 
 namespace ps
 {
@@ -162,11 +162,11 @@ cAllExternalLocations::cRetriever::cRetriever(
     // Replacing "%s" in the SQL with string values.
     this->vConvPlaceHolder({ sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szLocation, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDirectoryOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDirectoryName, SQLT_STR, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szLocation, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDirectoryOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDirectoryName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
 }
 
 void cAllExternalLocations::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)
