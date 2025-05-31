@@ -74,9 +74,12 @@ struct cAllViews::tAttributes
     {
         ::memset(szOwner, 0, sizeof(szOwner));
         ::memset(szViewName, 0, sizeof(szViewName));
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szViewName, rhs.szViewName);
-        ::strcpy(szText, rhs.szText);
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szViewName, rhs.szViewName, sizeof(szViewName) - 1);
+        szViewName[sizeof(szViewName) - 1] = '\0';
+        std::strncpy(szText, rhs.szText, rhs.iText);
+        szText[rhs.iText] = '\0';
     }
     ~tAttributes()
     {
@@ -205,10 +208,10 @@ cAllViews::cRetriever::cRetriever(
     this->vConvPlaceHolder({ sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
     oDefine_.vSetTiming(ps::lib::sql::occi::cDefine::tTiming::iOnce); // NOTE: default is iRepeat
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szViewName, SQLT_STR, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szViewName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(SB4MAXVAL, SQLT_CHR, OCI_DYNAMIC_FETCH
-        , ps::lib::sql::occi::cPieceVct::iCbkFunc, (void*) &pv_
+        , ps::lib::sql::occi::cPieceVct::iCbkFunc, static_cast<void*>(&pv_)
     );
 }
 

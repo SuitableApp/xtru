@@ -195,7 +195,7 @@ cPrivsGiven& cPrivsGiven::operator()(tKey oKey){
     char szReason[80];
     int16_t nReasonInd;
     uint16_t iReason = sizeof(szReason);
-    ::memset(szReason, 0, iReason);
+    std::memset(szReason, 0, iReason);
 
     // IN:  :b_table_schema, :b_table_name, :b_privilege
     // OUT: :b_privs_given, :b_reason

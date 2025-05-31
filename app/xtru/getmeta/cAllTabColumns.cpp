@@ -22,13 +22,13 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define  MINIMUM_DTYPE_LENGTH   15
+constexpr size_t MINIMUM_DTYPE_LENGTH = 15;
 
-#define DATA_TYPE_LEN        106+1 // Length of name of Oracle external data type.
-#define CHAR_USED_LEN          1+1
-#define NULLABLE_LEN           1+1
-#define VIRTUAL_COLUMN_LEN     3+1
-#define DATA_DEFAULT_LEN    1024+1
+constexpr size_t DATA_TYPE_LEN = 106+1; // Length of name of Oracle external data type.
+constexpr size_t CHAR_USED_LEN = 1+1;
+constexpr size_t NULLABLE_LEN = 1+1;
+constexpr size_t VIRTUAL_COLUMN_LEN = 3+1;
+constexpr size_t DATA_DEFAULT_LEN = 1024+1;
 
 namespace ps
 {
@@ -390,17 +390,17 @@ cAllTabColumns::cRetriever::cRetriever(
 		, later_10iR1 ? "t1.hidden_column = 'NO'" : "0=0"
     });
     // Inbounding data from Oracle.
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iColumnId, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szColumnName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDataType, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iDataLength, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szCharUsed, SQLT_STR, &rTable_->nCharUsedInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iDataPrecision, SQLT_UIN, &rTable_->nDataPrecisionInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iDataScale, SQLT_INT, &rTable_->nDataScaleInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szNullable, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szVirtualColumn, SQLT_STR, &rTable_->nVirtualColumnInd, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iColumnId, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szColumnName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDataType, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iDataLength, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szCharUsed, SQLT_STR, &rTable_->nCharUsedInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iDataPrecision, SQLT_UIN, &rTable_->nDataPrecisionInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iDataScale, SQLT_INT, &rTable_->nDataScaleInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szNullable, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szVirtualColumn, SQLT_STR, &rTable_->nVirtualColumnInd, nullptr, nullptr, iSkip_);
 }
 
 void cAllTabColumns::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)

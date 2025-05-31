@@ -22,7 +22,7 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define COMPOSITE_TYP_LEN         (3+1)
+constexpr size_t COMPOSITE_TYP_LEN = 3+1;
 
 namespace ps
 {
@@ -109,21 +109,28 @@ struct cAllIndPartitions::tAttributes
         , iHighValue(rhs.iHighValue)
         , sHighValue(rhs.sHighValue)
     {
-        ::memset(szOwner, 0, sizeof(szOwner));
-        ::memset(szIndexName, 0, sizeof(szIndexName));
-        ::memset(szComposite, 0, sizeof(szComposite));
-        ::memset(szPartitionName, 0, sizeof(szPartitionName));
-        ::memset(szTablespaceName, 0, sizeof(szTablespaceName));
-        ::memset(szGenerated, 0, sizeof(szGenerated));
-        ::memset(szCompression, 0, sizeof(szCompression));
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szIndexName, rhs.szIndexName);
-        ::strcpy(szComposite, rhs.szComposite);
-        ::strcpy(szPartitionName, rhs.szPartitionName);
-        ::strcpy(szTablespaceName, rhs.szTablespaceName);
-        ::strcpy(szGenerated, rhs.szGenerated);
-        ::strcpy(szCompression, rhs.szCompression);
-        ::strcpy(szHighValue, rhs.szHighValue);
+        std::memset(szOwner, 0, sizeof(szOwner));
+        std::memset(szIndexName, 0, sizeof(szIndexName));
+        std::memset(szComposite, 0, sizeof(szComposite));
+        std::memset(szPartitionName, 0, sizeof(szPartitionName));
+        std::memset(szTablespaceName, 0, sizeof(szTablespaceName));
+        std::memset(szGenerated, 0, sizeof(szGenerated));
+        std::memset(szCompression, 0, sizeof(szCompression));
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szIndexName, rhs.szIndexName, sizeof(szIndexName) - 1);
+        szIndexName[sizeof(szIndexName) - 1] = '\0';
+        std::strncpy(szComposite, rhs.szComposite, sizeof(szComposite) - 1);
+        szComposite[sizeof(szComposite) - 1] = '\0';
+        std::strncpy(szPartitionName, rhs.szPartitionName, sizeof(szPartitionName) - 1);
+        szPartitionName[sizeof(szPartitionName) - 1] = '\0';
+        std::strncpy(szTablespaceName, rhs.szTablespaceName, sizeof(szTablespaceName) - 1);
+        szTablespaceName[sizeof(szTablespaceName) - 1] = '\0';
+        std::strncpy(szGenerated, rhs.szGenerated, sizeof(szGenerated) - 1);
+        szGenerated[sizeof(szGenerated) - 1] = '\0';
+        std::strncpy(szCompression, rhs.szCompression, sizeof(szCompression) - 1);
+        szCompression[sizeof(szCompression) - 1] = '\0';
+        std::strcpy(szHighValue, rhs.szHighValue);
     }
     ~tAttributes()
     {
@@ -309,17 +316,17 @@ cAllIndPartitions::cRetriever::cRetriever(
     });
     // Inbounding data from Oracle.
     oDefine_.vSetTiming(ps::lib::sql::occi::cDefine::tTiming::iOnce); // NOTE: default is iRepeat
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szIndexName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szComposite, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szPartitionName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iSubpartitionCount, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iPartitionPosition, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTablespaceName, SQLT_STR, &rTable_->nTablespaceNameInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szGenerated, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szCompression, SQLT_STR, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szIndexName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szComposite, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szPartitionName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iSubpartitionCount, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iPartitionPosition, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTablespaceName, SQLT_STR, &rTable_->nTablespaceNameInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szGenerated, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szCompression, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(SB4MAXVAL, SQLT_CHR, OCI_DYNAMIC_FETCH
-        , ps::lib::sql::occi::cPieceVct::iCbkFunc, (void*) &pv_
+        , ps::lib::sql::occi::cPieceVct::iCbkFunc, static_cast<void*>(&pv_)
     );
 }
 

@@ -22,11 +22,11 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define STATUS_LEN           (8+1)
-#define DEFERRABLE_LEN      (14+1)
-#define DEFERRERD_LEN        (9+1)
-#define VALIDATED_LEN       (13+1)
-#define GENETATED_LEN       (14+1)
+constexpr size_t STATUS_LEN = 8+1;
+constexpr size_t DEFERRABLE_LEN = 14+1;
+constexpr size_t DEFERRERD_LEN = 9+1;
+constexpr size_t VALIDATED_LEN = 13+1;
+constexpr size_t GENETATED_LEN = 14+1;
 
 namespace ps
 {
@@ -136,15 +136,24 @@ struct cConsOfCheck::tAttributes
         ::memset(szValidated, 0, sizeof(szValidated));
         ::memset(szGenerated, 0, sizeof(szGenerated));
         // copy the data.
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szTableName, rhs.szTableName);
-        ::strcpy(szConstraintName, rhs.szConstraintName);
-        ::strcpy(szSearchCondition, rhs.szSearchCondition);
-        ::strcpy(szStatus, rhs.szStatus);
-        ::strcpy(szDeferrable, rhs.szDeferrable);
-        ::strcpy(szDeferred, rhs.szDeferred);
-        ::strcpy(szValidated, rhs.szValidated);
-        ::strcpy(szGenerated, rhs.szGenerated);
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szTableName, rhs.szTableName, sizeof(szTableName) - 1);
+        szTableName[sizeof(szTableName) - 1] = '\0';
+        std::strncpy(szConstraintName, rhs.szConstraintName, sizeof(szConstraintName) - 1);
+        szConstraintName[sizeof(szConstraintName) - 1] = '\0';
+        std::strncpy(szSearchCondition, rhs.szSearchCondition, rhs.iSearchCondition);
+        szSearchCondition[rhs.iSearchCondition] = '\0';
+        std::strncpy(szStatus, rhs.szStatus, sizeof(szStatus) - 1);
+        szStatus[sizeof(szStatus) - 1] = '\0';
+        std::strncpy(szDeferrable, rhs.szDeferrable, sizeof(szDeferrable) - 1);
+        szDeferrable[sizeof(szDeferrable) - 1] = '\0';
+        std::strncpy(szDeferred, rhs.szDeferred, sizeof(szDeferred) - 1);
+        szDeferred[sizeof(szDeferred) - 1] = '\0';
+        std::strncpy(szValidated, rhs.szValidated, sizeof(szValidated) - 1);
+        szValidated[sizeof(szValidated) - 1] = '\0';
+        std::strncpy(szGenerated, rhs.szGenerated, sizeof(szGenerated) - 1);
+        szGenerated[sizeof(szGenerated) - 1] = '\0';
     }
     ~tAttributes()
     {
@@ -269,16 +278,16 @@ cConsOfCheck::cRetriever::cRetriever(
     this->vConvPlaceHolder({ sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
     oDefine_.vSetTiming(ps::lib::sql::occi::cDefine::tTiming::iOnce); // NOTE: default is iRepeat
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szConstraintName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szStatus, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDeferrable, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDeferred, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szValidated, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szGenerated, SQLT_STR, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szConstraintName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szStatus, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDeferrable, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDeferred, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szValidated, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szGenerated, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(SB4MAXVAL, SQLT_CHR, OCI_DYNAMIC_FETCH
-        , ps::lib::sql::occi::cPieceVct::iCbkFunc, (void*) &pv_
+        , ps::lib::sql::occi::cPieceVct::iCbkFunc, static_cast<void*>(&pv_)
     );
 }
 

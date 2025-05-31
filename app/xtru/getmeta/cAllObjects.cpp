@@ -134,10 +134,10 @@ cAllObjects::cRetriever::cRetriever(
     // Replacing "%s" in the SQL with string values.
     this->vConvPlaceHolder({ sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szObjectType, SQLT_STR, &rTable_->nObjectTypeInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szObjectName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szSubObjectName, SQLT_STR, &rTable_->nSubObjectNameInd, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szObjectType, SQLT_STR, &rTable_->nObjectTypeInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szObjectName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szSubObjectName, SQLT_STR, &rTable_->nSubObjectNameInd, nullptr, nullptr, iSkip_);
 }
 
 void cAllObjects::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)

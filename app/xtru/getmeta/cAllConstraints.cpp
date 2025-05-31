@@ -22,13 +22,13 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define CONSTR_TYPE_LEN 1+1
-#define DEL_RULE_LEN    9+1
-#define STATUS_LEN      8+1
-#define DEFERRABLE_LEN 14+1
-#define DEFERRERD_LEN   9+1
-#define VALIDATED_LEN  13+1
-#define GENETATED_LEN  14+1
+constexpr size_t CONSTR_TYPE_LEN = 1+1;
+constexpr size_t DEL_RULE_LEN = 9+1;
+constexpr size_t STATUS_LEN = 8+1;
+constexpr size_t DEFERRABLE_LEN = 14+1;
+constexpr size_t DEFERRERD_LEN = 9+1;
+constexpr size_t VALIDATED_LEN = 13+1;
+constexpr size_t GENETATED_LEN = 14+1;
 namespace ps
 {
 
@@ -180,21 +180,35 @@ struct cAllConstraints::tAttributes
         ::memset(szIndexOwner, 0, sizeof(szIndexOwner));
         ::memset(szIndexName, 0, sizeof(szIndexName));
         // copy the data.
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szConstraintName, rhs.szConstraintName);
-        ::strcpy(szConstraintType, rhs.szConstraintType);
-        ::strcpy(szTableName, rhs.szTableName);
-        ::strcpy(szSearchCondition, rhs.szSearchCondition);
-        ::strcpy(szROwner, rhs.szROwner);
-        ::strcpy(szRConstraintName, rhs.szRConstraintName);
-        ::strcpy(szDeleteRule, rhs.szDeleteRule);
-        ::strcpy(szStatus, rhs.szStatus);
-        ::strcpy(szDeferrable, rhs.szDeferrable);
-        ::strcpy(szDeferred, rhs.szDeferred);
-        ::strcpy(szValidated, rhs.szValidated);
-        ::strcpy(szGenerated, rhs.szGenerated);
-        ::strcpy(szIndexOwner, rhs.szIndexOwner);
-        ::strcpy(szIndexName, rhs.szIndexName);
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szConstraintName, rhs.szConstraintName, sizeof(szConstraintName) - 1);
+        szConstraintName[sizeof(szConstraintName) - 1] = '\0';
+        std::strncpy(szConstraintType, rhs.szConstraintType, sizeof(szConstraintType) - 1);
+        szConstraintType[sizeof(szConstraintType) - 1] = '\0';
+        std::strncpy(szTableName, rhs.szTableName, sizeof(szTableName) - 1);
+        szTableName[sizeof(szTableName) - 1] = '\0';
+        std::strcpy(szSearchCondition, rhs.szSearchCondition);
+        std::strncpy(szROwner, rhs.szROwner, sizeof(szROwner) - 1);
+        szROwner[sizeof(szROwner) - 1] = '\0';
+        std::strncpy(szRConstraintName, rhs.szRConstraintName, sizeof(szRConstraintName) - 1);
+        szRConstraintName[sizeof(szRConstraintName) - 1] = '\0';
+        std::strncpy(szDeleteRule, rhs.szDeleteRule, sizeof(szDeleteRule) - 1);
+        szDeleteRule[sizeof(szDeleteRule) - 1] = '\0';
+        std::strncpy(szStatus, rhs.szStatus, sizeof(szStatus) - 1);
+        szStatus[sizeof(szStatus) - 1] = '\0';
+        std::strncpy(szDeferrable, rhs.szDeferrable, sizeof(szDeferrable) - 1);
+        szDeferrable[sizeof(szDeferrable) - 1] = '\0';
+        std::strncpy(szDeferred, rhs.szDeferred, sizeof(szDeferred) - 1);
+        szDeferred[sizeof(szDeferred) - 1] = '\0';
+        std::strncpy(szValidated, rhs.szValidated, sizeof(szValidated) - 1);
+        szValidated[sizeof(szValidated) - 1] = '\0';
+        std::strncpy(szGenerated, rhs.szGenerated, sizeof(szGenerated) - 1);
+        szGenerated[sizeof(szGenerated) - 1] = '\0';
+        std::strncpy(szIndexOwner, rhs.szIndexOwner, sizeof(szIndexOwner) - 1);
+        szIndexOwner[sizeof(szIndexOwner) - 1] = '\0';
+        std::strncpy(szIndexName, rhs.szIndexName, sizeof(szIndexName) - 1);
+        szIndexName[sizeof(szIndexName) - 1] = '\0';
     }
     ~tAttributes()
     {
@@ -302,23 +316,23 @@ cAllConstraints::cRetriever::cRetriever(
     this->vConvPlaceHolder({ later_9iR1 ? szAplddT03_r9 : szAplddT03_r8, sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
     oDefine_.vSetTiming(ps::lib::sql::occi::cDefine::tTiming::iOnce); // NOTE: default is iRepeat
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szConstraintName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szConstraintType, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szConstraintName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szConstraintType, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(SB4MAXVAL, SQLT_CHR, OCI_DYNAMIC_FETCH
-        , ps::lib::sql::occi::cPieceVct::iCbkFunc, (void*) &pv_
+        , ps::lib::sql::occi::cPieceVct::iCbkFunc, static_cast<void*>(&pv_)
     );
-    oDefine_.vAddItem(rTable_->szROwner, SQLT_STR, &rTable_->nROwnerInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szRConstraintName, SQLT_STR, &rTable_->nRConstraintNameInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDeleteRule, SQLT_STR, &rTable_->nDeleteRuleInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szStatus, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDeferrable, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDeferred, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szValidated, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szGenerated, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szIndexOwner, SQLT_STR, &rTable_->nIndexOwnerInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szIndexName, SQLT_STR, &rTable_->nIndexNameInd, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szROwner, SQLT_STR, &rTable_->nROwnerInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szRConstraintName, SQLT_STR, &rTable_->nRConstraintNameInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDeleteRule, SQLT_STR, &rTable_->nDeleteRuleInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szStatus, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDeferrable, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDeferred, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szValidated, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szGenerated, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szIndexOwner, SQLT_STR, &rTable_->nIndexOwnerInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szIndexName, SQLT_STR, &rTable_->nIndexNameInd, nullptr, nullptr, iSkip_);
 }
 
 void cAllConstraints::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)

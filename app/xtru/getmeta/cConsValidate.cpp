@@ -22,8 +22,8 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define VALIDATED_LEN  13+1
-#define GENETATED_LEN  14+1
+constexpr size_t VALIDATED_LEN = 13+1;
+constexpr size_t GENETATED_LEN = 14+1;
 
 namespace ps
 {
@@ -470,8 +470,8 @@ void cConsValidate::vExecuteAndFetch(
     // tells user memory addresses to ps::lib::sql::lite3::cSqliteStmt
     ps::lib::sql::lite3::cDefine& oDefine(oStmt.oGetDefine());
     using ps::lib::sql::lite3::cAttr;
-    oDefine.vAddItem(rRowBuf.szOwner, cAttr::STR, NULL, iSkip_, iSkip_);
-    oDefine.vAddItem(rRowBuf.szKeyName, cAttr::STR, NULL, iSkip_, iSkip_);
+    oDefine.vAddItem(rRowBuf.szOwner, cAttr::STR, nullptr, iSkip_, iSkip_);
+    oDefine.vAddItem(rRowBuf.szKeyName, cAttr::STR, nullptr, iSkip_, iSkip_);
     oDefine.vAddItem(rRowBuf.szTableName, cAttr::STR, &rRowBuf.nTableNameInd, iSkip_, iSkip_);
     oDefine.vAddItem(rRowBuf.szConstraintName, cAttr::STR, &rRowBuf.nConstraintNameInd, iSkip_, iSkip_);
     oDefine.vAddItem(rRowBuf.szValidated, cAttr::STR, &rRowBuf.nValidatedInd, iSkip_, iSkip_);

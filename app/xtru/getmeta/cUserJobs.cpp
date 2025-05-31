@@ -22,9 +22,9 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define NEXT_DATE_LEN  24+1
-#define BROKEN_LEN      1+1
-#define INTERVAL_LEN  200+1
+constexpr size_t NEXT_DATE_LEN = 24+1;
+constexpr size_t BROKEN_LEN = 1+1;
+constexpr size_t INTERVAL_LEN = 200+1;
 
 namespace ps
 {
@@ -82,17 +82,23 @@ struct cUserJobs::tAttributes
         , nWhatInd(rhs.nWhatInd)
         , iWhat(rhs.iWhat)
     {
-        ::memset(szSchemaUser, 0, sizeof(szSchemaUser));
-        ::memset(szObjectName, 0, sizeof(szObjectName));
-        ::memset(szNextDate, 0, sizeof(szNextDate));
-        ::memset(szBroken, 0, sizeof(szBroken));
-        ::memset(szInterval, 0, sizeof(szInterval));
-        ::strcpy(szSchemaUser, rhs.szSchemaUser);
-        ::strcpy(szObjectName, rhs.szObjectName);
-        ::strcpy(szNextDate, rhs.szNextDate);
-        ::strcpy(szBroken, rhs.szBroken);
-        ::strcpy(szInterval, rhs.szInterval);
-        ::strcpy(szWhat, rhs.szWhat);
+        std::memset(szSchemaUser, 0, sizeof(szSchemaUser));
+        std::memset(szObjectName, 0, sizeof(szObjectName));
+        std::memset(szNextDate, 0, sizeof(szNextDate));
+        std::memset(szBroken, 0, sizeof(szBroken));
+        std::memset(szInterval, 0, sizeof(szInterval));
+        std::strncpy(szSchemaUser, rhs.szSchemaUser, sizeof(szSchemaUser) - 1);
+        szSchemaUser[sizeof(szSchemaUser) - 1] = '\0';
+        std::strncpy(szObjectName, rhs.szObjectName, sizeof(szObjectName) - 1);
+        szObjectName[sizeof(szObjectName) - 1] = '\0';
+        std::strncpy(szNextDate, rhs.szNextDate, sizeof(szNextDate) - 1);
+        szNextDate[sizeof(szNextDate) - 1] = '\0';
+        std::strncpy(szBroken, rhs.szBroken, sizeof(szBroken) - 1);
+        szBroken[sizeof(szBroken) - 1] = '\0';
+        std::strncpy(szInterval, rhs.szInterval, sizeof(szInterval) - 1);
+        szInterval[sizeof(szInterval) - 1] = '\0';
+        std::strncpy(szWhat, rhs.szWhat, rhs.iWhat);
+        szWhat[rhs.iWhat] = '\0';
     }
     ~tAttributes()
     {
@@ -235,13 +241,13 @@ cUserJobs::cRetriever::cRetriever(
     this->vConvPlaceHolder({ sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
     oDefine_.vSetTiming(ps::lib::sql::occi::cDefine::tTiming::iOnce); // NOTE: default is iRepeat
-    oDefine_.vAddItem(rTable_->szSchemaUser, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szObjectName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szNextDate, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szBroken, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szInterval, SQLT_STR, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szSchemaUser, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szObjectName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szNextDate, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szBroken, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szInterval, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(SB4MAXVAL, SQLT_CHR, OCI_DYNAMIC_FETCH
-        , ps::lib::sql::occi::cPieceVct::iCbkFunc, (void*) &pv_
+        , ps::lib::sql::occi::cPieceVct::iCbkFunc, static_cast<void*>(&pv_)
     );
 }
 

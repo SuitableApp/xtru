@@ -22,9 +22,9 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define TYPE_OWNER_LEN             (3+1)
-#define REJECT_LIMIT_LEN          (40+1)
-#define ACCESS_TYPE_LEN            (7+1)
+constexpr size_t TYPE_OWNER_LEN = 3+1;
+constexpr size_t REJECT_LIMIT_LEN = 40+1;
+constexpr size_t ACCESS_TYPE_LEN = 7+1;
 
 namespace ps
 {
@@ -99,15 +99,26 @@ struct cAllExternalTables::tAttributes
         ::memset(szDefaultDirectoryName, 0, sizeof(szDefaultDirectoryName));
         ::memset(szRejectLimit, 0, sizeof(szRejectLimit));
         ::memset(szAccessType, 0, sizeof(szAccessType));
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szTableName, rhs.szTableName);
-        ::strcpy(szTypeOwner, rhs.szTypeOwner);
-        ::strcpy(szTypeName, rhs.szTypeName);
-        ::strcpy(szDefaultDirectoryOwner, rhs.szDefaultDirectoryOwner);
-        ::strcpy(szDefaultDirectoryName, rhs.szDefaultDirectoryName);
-        ::strcpy(szRejectLimit, rhs.szRejectLimit);
-        ::strcpy(szAccessType, rhs.szAccessType);
-        ::strcpy(szAccessParameters, rhs.szAccessParameters);
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szTableName, rhs.szTableName, sizeof(szTableName) - 1);
+        szTableName[sizeof(szTableName) - 1] = '\0';
+        std::strncpy(szTypeOwner, rhs.szTypeOwner, sizeof(szTypeOwner) - 1);
+        szTypeOwner[sizeof(szTypeOwner) - 1] = '\0';
+        std::strncpy(szTypeName, rhs.szTypeName, sizeof(szTypeName) - 1);
+        szTypeName[sizeof(szTypeName) - 1] = '\0';
+        std::strncpy(szDefaultDirectoryOwner, rhs.szDefaultDirectoryOwner, sizeof(szDefaultDirectoryOwner) - 1);
+        szDefaultDirectoryOwner[sizeof(szDefaultDirectoryOwner) - 1] = '\0';
+        std::strncpy(szDefaultDirectoryName, rhs.szDefaultDirectoryName, sizeof(szDefaultDirectoryName) - 1);
+        szDefaultDirectoryName[sizeof(szDefaultDirectoryName) - 1] = '\0';
+        std::strncpy(szRejectLimit, rhs.szRejectLimit, sizeof(szRejectLimit) - 1);
+        szRejectLimit[sizeof(szRejectLimit) - 1] = '\0';
+        std::strncpy(szAccessType, rhs.szAccessType, sizeof(szAccessType) - 1);
+        szAccessType[sizeof(szAccessType) - 1] = '\0';
+        if (szAccessParameters && rhs.szAccessParameters) {
+            std::strncpy(szAccessParameters, rhs.szAccessParameters, iAccessParameters);
+            szAccessParameters[iAccessParameters] = '\0';
+        }
     }
     ~tAttributes()
     {
@@ -226,16 +237,16 @@ cAllExternalTables::cRetriever::cRetriever(
     this->vConvPlaceHolder({ sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
     oDefine_.vSetTiming(ps::lib::sql::occi::cDefine::tTiming::iOnce); // NOTE: default is iRepeat
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTypeOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTypeName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDefaultDirectoryOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDefaultDirectoryName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szRejectLimit, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szAccessType, SQLT_STR, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTypeOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTypeName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDefaultDirectoryOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDefaultDirectoryName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szRejectLimit, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szAccessType, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(SB4MAXVAL, SQLT_CHR, OCI_DYNAMIC_FETCH
-        , ps::lib::sql::occi::cPieceVct::iCbkFunc, (void*) &pv_
+        , ps::lib::sql::occi::cPieceVct::iCbkFunc, static_cast<void*>(&pv_)
     );
 }
 

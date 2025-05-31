@@ -81,10 +81,14 @@ struct cAllColComments::tAttributes
         ::memset(szOwner, 0, sizeof(szOwner));
         ::memset(szTableName, 0, sizeof(szTableName));
         ::memset(szColumnName, 0, sizeof(szColumnName));
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szTableName, rhs.szTableName);
-        ::strcpy(szColumnName, rhs.szColumnName);
-        ::strcpy(szComments, rhs.szComments);
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szTableName, rhs.szTableName, sizeof(szTableName) - 1);
+        szTableName[sizeof(szTableName) - 1] = '\0';
+        std::strncpy(szColumnName, rhs.szColumnName, sizeof(szColumnName) - 1);
+        szColumnName[sizeof(szColumnName) - 1] = '\0';
+        std::strncpy(szComments, rhs.szComments, rhs.iComments);
+        szComments[rhs.iComments] = '\0';
     }
     ~tAttributes()
     {
@@ -199,12 +203,12 @@ cAllColComments::cRetriever::cRetriever(
     this->vConvPlaceHolder({ sGetSqlInList(oOwners), predicate });
     // Inbounding data from Oracle.
     oDefine_.vSetTiming(ps::lib::sql::occi::cDefine::tTiming::iOnce); // NOTE: default is iRepeat
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szColumnName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iColumnId, SQLT_UIN, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szColumnName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iColumnId, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(SB4MAXVAL, SQLT_CHR, OCI_DYNAMIC_FETCH
-        , ps::lib::sql::occi::cPieceVct::iCbkFunc, (void*) &pv_
+        , ps::lib::sql::occi::cPieceVct::iCbkFunc, static_cast<void*>(&pv_)
     );
 }
 

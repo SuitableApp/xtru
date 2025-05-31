@@ -85,13 +85,17 @@ struct cAllIndColumns::tAttributes
         , nColumnNameInd(rhs.nColumnNameInd)
         , iColumnName(rhs.iColumnName)
     {
-        ::memset(szOwner, 0, sizeof(szOwner));
-        ::memset(szTableName, 0, sizeof(szTableName));
-        ::memset(szIndexName, 0, sizeof(szIndexName));
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szTableName, rhs.szTableName);
-        ::strcpy(szIndexName, rhs.szIndexName);
-        ::strcpy(szColumnName, rhs.szColumnName);
+        std::memset(szOwner, 0, sizeof(szOwner));
+        std::memset(szTableName, 0, sizeof(szTableName));
+        std::memset(szIndexName, 0, sizeof(szIndexName));
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szTableName, rhs.szTableName, sizeof(szTableName) - 1);
+        szTableName[sizeof(szTableName) - 1] = '\0';
+        std::strncpy(szIndexName, rhs.szIndexName, sizeof(szIndexName) - 1);
+        szIndexName[sizeof(szIndexName) - 1] = '\0';
+        std::strncpy(szColumnName, rhs.szColumnName, rhs.iColumnName);
+        szColumnName[rhs.iColumnName] = '\0';
     }
     ~tAttributes()
     {
@@ -210,13 +214,13 @@ cAllIndColumns::cRetriever::cRetriever(
     this->vConvPlaceHolder({ sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
     oDefine_.vSetTiming(ps::lib::sql::occi::cDefine::tTiming::iOnce); // NOTE: default is iRepeat
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szIndexName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iColumnPosition, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iFunctionBased, SQLT_UIN, &rTable_->nFunctionBasedInd, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szIndexName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iColumnPosition, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iFunctionBased, SQLT_UIN, &rTable_->nFunctionBasedInd, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(SB4MAXVAL, SQLT_CHR, OCI_DYNAMIC_FETCH
-        , ps::lib::sql::occi::cPieceVct::iCbkFunc, (void*) &pv_
+        , ps::lib::sql::occi::cPieceVct::iCbkFunc, static_cast<void*>(&pv_)
     );
 }
 

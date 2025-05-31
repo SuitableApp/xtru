@@ -22,10 +22,10 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define IMPDST_LEN       1+1
-#define NEXT_DATE_LEN   24+1
-#define INTERVAL_LEN   200+1
-#define BROKEN_LEN       1+1
+constexpr size_t IMPDST_LEN = 1+1;
+constexpr size_t NEXT_DATE_LEN = 24+1;
+constexpr size_t INTERVAL_LEN = 200+1;
+constexpr size_t BROKEN_LEN = 1+1;
 
 namespace ps
 {
@@ -218,14 +218,14 @@ cAllRefresh::cRetriever::cRetriever(
     // Replacing "%s" in the SQL with string values.
     this->vConvPlaceHolder({ sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
-    oDefine_.vAddItem(rTable_->szROwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szRName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iRefGroup, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szImplicitDestroy, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szRollbackSeg, SQLT_STR, &rTable_->nRollbackSegInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szNextDate, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szInterval, SQLT_STR, &rTable_->nIntervalInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szBroken, SQLT_STR, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szROwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szRName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iRefGroup, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szImplicitDestroy, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szRollbackSeg, SQLT_STR, &rTable_->nRollbackSegInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szNextDate, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szInterval, SQLT_STR, &rTable_->nIntervalInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szBroken, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
 }
 
 void cAllRefresh::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)

@@ -22,7 +22,7 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define PROPERTY_LEN                      (6+1)
+constexpr size_t PROPERTY_LEN = 6+1;
 
 namespace ps
 {
@@ -177,12 +177,12 @@ cAllLogGroupColumns::cRetriever::cRetriever(
         , sGetSqlInList(oOwners)
     });
     // Inbounding data from Oracle.
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szLogGroupName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szColumnName, SQLT_STR, &rTable_->nColumnNameInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iPosition, SQLT_UIN, &rTable_->nPositionInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szLoggingProperty, SQLT_STR, &rTable_->nLoggingPropertyInd, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szLogGroupName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szColumnName, SQLT_STR, &rTable_->nColumnNameInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iPosition, SQLT_UIN, &rTable_->nPositionInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szLoggingProperty, SQLT_STR, &rTable_->nLoggingPropertyInd, nullptr, nullptr, iSkip_);
 }
 
 void cAllLogGroupColumns::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)

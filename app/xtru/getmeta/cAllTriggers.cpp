@@ -22,7 +22,7 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define DESCRIPTION_LEN           (4000+1)
+constexpr size_t DESCRIPTION_LEN = 4000+1;
 
 namespace ps
 {
@@ -80,15 +80,19 @@ struct cAllTriggers::tAttributes
         , nTriggerBodyInd(rhs.nTriggerBodyInd)
         , iTriggerBody(rhs.iTriggerBody)
     {
-        ::memset(szOwner, 0, sizeof(szOwner));
-        ::memset(szTableName, 0, sizeof(szTableName));
-        ::memset(szTriggerName, 0, sizeof(szTriggerName));
-        ::memset(szDescription, 0, sizeof(szDescription));
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szTableName, rhs.szTableName);
-        ::strcpy(szTriggerName, rhs.szTriggerName);
-        ::strcpy(szDescription, rhs.szDescription);
-        ::strcpy(szTriggerBody, rhs.szTriggerBody);
+        std::memset(szOwner, 0, sizeof(szOwner));
+        std::memset(szTableName, 0, sizeof(szTableName));
+        std::memset(szTriggerName, 0, sizeof(szTriggerName));
+        std::memset(szDescription, 0, sizeof(szDescription));
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szTableName, rhs.szTableName, sizeof(szTableName) - 1);
+        szTableName[sizeof(szTableName) - 1] = '\0';
+        std::strncpy(szTriggerName, rhs.szTriggerName, sizeof(szTriggerName) - 1);
+        szTriggerName[sizeof(szTriggerName) - 1] = '\0';
+        std::strncpy(szDescription, rhs.szDescription, sizeof(szDescription) - 1);
+        szDescription[sizeof(szDescription) - 1] = '\0';
+        std::strcpy(szTriggerBody, rhs.szTriggerBody);
     }
     ~tAttributes()
     {
@@ -209,12 +213,12 @@ cAllTriggers::cRetriever::cRetriever(
     this->vConvPlaceHolder({ sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
     oDefine_.vSetTiming(ps::lib::sql::occi::cDefine::tTiming::iOnce); // NOTE: default is iRepeat
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTriggerName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDescription, SQLT_STR, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTriggerName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDescription, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(SB4MAXVAL, SQLT_CHR, OCI_DYNAMIC_FETCH
-        , ps::lib::sql::occi::cPieceVct::iCbkFunc, (void*) &pv_
+        , ps::lib::sql::occi::cPieceVct::iCbkFunc, static_cast<void*>(&pv_)
     );
 }
 

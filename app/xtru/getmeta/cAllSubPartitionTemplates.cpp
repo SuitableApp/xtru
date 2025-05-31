@@ -89,15 +89,20 @@ struct cAllSubPartitionTemplates::tAttributes
         , iHighBound(rhs.iHighBound)
         , sHighBound(rhs.sHighBound)
     {
-        ::memset(szOwner, 0, sizeof(szOwner));
-        ::memset(szTableName, 0, sizeof(szTableName));
-        ::memset(szSubPartitionName, 0, sizeof(szSubPartitionName));
-        ::memset(szTablespaceName, 0, sizeof(szTablespaceName));
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szTableName, rhs.szTableName);
-        ::strcpy(szSubPartitionName, rhs.szSubPartitionName);
-        ::strcpy(szTablespaceName, rhs.szTablespaceName);
-        ::strcpy(szHighBound, rhs.szHighBound);
+        std::memset(szOwner, 0, sizeof(szOwner));
+        std::memset(szTableName, 0, sizeof(szTableName));
+        std::memset(szSubPartitionName, 0, sizeof(szSubPartitionName));
+        std::memset(szTablespaceName, 0, sizeof(szTablespaceName));
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szTableName, rhs.szTableName, sizeof(szTableName) - 1);
+        szTableName[sizeof(szTableName) - 1] = '\0';
+        std::strncpy(szSubPartitionName, rhs.szSubPartitionName, sizeof(szSubPartitionName) - 1);
+        szSubPartitionName[sizeof(szSubPartitionName) - 1] = '\0';
+        std::strncpy(szTablespaceName, rhs.szTablespaceName, sizeof(szTablespaceName) - 1);
+        szTablespaceName[sizeof(szTablespaceName) - 1] = '\0';
+        std::strncpy(szHighBound, rhs.szHighBound, rhs.iHighBound);
+        szHighBound[rhs.iHighBound] = '\0';
     }
     ~tAttributes()
     {
@@ -226,13 +231,13 @@ cAllSubPartitionTemplates::cRetriever::cRetriever(
     });
     // Inbounding data from Oracle.
     oDefine_.vSetTiming(ps::lib::sql::occi::cDefine::tTiming::iOnce); // NOTE: default is iRepeat
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szSubPartitionName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iSubPartitionPosition, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTablespaceName, SQLT_STR, &rTable_->nTablespaceNameInd, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szSubPartitionName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iSubPartitionPosition, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTablespaceName, SQLT_STR, &rTable_->nTablespaceNameInd, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(SB4MAXVAL, SQLT_CHR, OCI_DYNAMIC_FETCH
-        , ps::lib::sql::occi::cPieceVct::iCbkFunc, (void*) &pv_
+        , ps::lib::sql::occi::cPieceVct::iCbkFunc, static_cast<void*>(&pv_)
     );
 }
 

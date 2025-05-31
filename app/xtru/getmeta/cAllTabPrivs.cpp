@@ -22,8 +22,8 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define PRIVILEGE_NAME_LEN    40+1 /* Max Length of privilege name */
-#define GRANTABLE_LEN          3+1
+constexpr size_t PRIVILEGE_NAME_LEN = 40+1; /* Max Length of privilege name */
+constexpr size_t GRANTABLE_LEN = 3+1;
 
 namespace ps
 {
@@ -169,12 +169,12 @@ cAllTabPrivs::cRetriever::cRetriever(
     // Replacing "%s" in the SQL with string values.
     this->vConvPlaceHolder({ sGetSqlInList(oOwners), later_12c ? cAllTabPrivs::sz12cSpec : "" });
     // Inbounding data from Oracle.
-    oDefine_.vAddItem(rTable_->iTypeIdx, SQLT_INT, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szPrivilege, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szGrantee, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szGrantable, SQLT_STR, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->iTypeIdx, SQLT_INT, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTableName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szPrivilege, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szGrantee, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szGrantable, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
 }
 
 void cAllTabPrivs::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)

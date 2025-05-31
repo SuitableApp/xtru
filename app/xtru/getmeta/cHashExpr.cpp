@@ -73,11 +73,14 @@ struct cHashExpr::tAttributes
         , nHashExpressionInd(rhs.nHashExpressionInd)
         , iHashExpression(rhs.iHashExpression)
     {
-        ::memset(szOwner, 0, sizeof(szOwner));
-        ::memset(szClusterName, 0, sizeof(szClusterName));
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szClusterName, rhs.szClusterName);
-        ::strcpy(szHashExpression, rhs.szHashExpression);
+        std::memset(szOwner, 0, sizeof(szOwner));
+        std::memset(szClusterName, 0, sizeof(szClusterName));
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szClusterName, rhs.szClusterName, sizeof(szClusterName) - 1);
+        szClusterName[sizeof(szClusterName) - 1] = '\0';
+        std::strncpy(szHashExpression, rhs.szHashExpression, iHashExpression);
+        szHashExpression[iHashExpression] = '\0';
     }
     ~tAttributes()
     {
@@ -179,10 +182,10 @@ cHashExpr::cRetriever::cRetriever(
     this->vConvPlaceHolder({ sGetSqlInList(oOwners) });
     // Inbounding data from Oracle.
     oDefine_.vSetTiming(ps::lib::sql::occi::cDefine::tTiming::iOnce); // NOTE: default is iRepeat
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szClusterName, SQLT_STR, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szClusterName, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
     oDefine_.vAddItem(SB4MAXVAL, SQLT_CHR, OCI_DYNAMIC_FETCH
-        , ps::lib::sql::occi::cPieceVct::iCbkFunc, (void*) &pv_
+        , ps::lib::sql::occi::cPieceVct::iCbkFunc, static_cast<void*>(&pv_)
     );
 }
 
