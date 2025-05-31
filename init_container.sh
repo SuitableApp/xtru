@@ -7,13 +7,13 @@ rpmdev-setuptree
 # Newer packages are available, but These are chosen because they are available for both aarch64 and x86-64.
 
 if [ -z $(rpm -qa oracle-*instantclient*.*-basic) ]; then
-    rm -rf /home/$DEVELOPER/rpmbuild/RPMS/$MACHINE/oracle-instantclient-{basic,sqlplus,devel,tools}-23.8.0.25.04-1.el9.$MACHINE.rpm
+    rm -rf /home/$DEVELOPER/rpmbuild/RPMS/$MACHINE/oracle-instantclient-{basic,sqlplus,devel,tools}-23.8.0.25.04-1.el9.x86_64.rpm
     wget --directory-prefix=/home/$DEVELOPER/rpmbuild/RPMS/$MACHINE \
-        https://download.oracle.com/otn_software/linux/instantclient/2380000/oracle-instantclient-basic-23.8.0.25.04-1.el9.$MACHINE.rpm \
-        https://download.oracle.com/otn_software/linux/instantclient/2380000/oracle-instantclient-sqlplus-23.8.0.25.04-1.el9.$MACHINE.rpm \
-        https://download.oracle.com/otn_software/linux/instantclient/2380000/oracle-instantclient-devel-23.8.0.25.04-1.el9.$MACHINE.rpm \
-        https://download.oracle.com/otn_software/linux/instantclient/2380000/oracle-instantclient-tools-23.8.0.25.04-1.el9.$MACHINE.rpm
-    sudo dnf install -y /home/$DEVELOPER/rpmbuild/RPMS/$MACHINE/oracle-instantclient-*-23.8.0.25.04-1.el9.$MACHINE.rpm
+        https://download.oracle.com/otn_software/linux/instantclient/2380000/oracle-instantclient-basic-23.8.0.25.04-1.el9.x86_64.rpm \
+        https://download.oracle.com/otn_software/linux/instantclient/2380000/oracle-instantclient-sqlplus-23.8.0.25.04-1.el9.x86_64.rpm \
+        https://download.oracle.com/otn_software/linux/instantclient/2380000/oracle-instantclient-devel-23.8.0.25.04-1.el9.x86_64.rpm \
+        https://download.oracle.com/otn_software/linux/instantclient/2380000/oracle-instantclient-tools-23.8.0.25.04-1.el9.x86_64.rpm
+    sudo dnf install -y /home/$DEVELOPER/rpmbuild/RPMS/$MACHINE/oracle-instantclient-*-23.8.0.25.04-1.el9.x86_64.rpm
     sudo ln -s /usr/lib/oracle/$ORA_RELEASE/client64/bin/sqlldr /usr/bin/sqlldr
     sudo ln -s /usr/lib/oracle/$ORA_RELEASE/client64/lib/libocci.so.23.1 /usr/lib/oracle/$ORA_RELEASE/client64/lib/libocci.so
 fi
