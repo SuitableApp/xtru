@@ -82,17 +82,23 @@ struct cUserJobs::tAttributes
         , nWhatInd(rhs.nWhatInd)
         , iWhat(rhs.iWhat)
     {
-        ::memset(szSchemaUser, 0, sizeof(szSchemaUser));
-        ::memset(szObjectName, 0, sizeof(szObjectName));
-        ::memset(szNextDate, 0, sizeof(szNextDate));
-        ::memset(szBroken, 0, sizeof(szBroken));
-        ::memset(szInterval, 0, sizeof(szInterval));
-        ::strcpy(szSchemaUser, rhs.szSchemaUser);
-        ::strcpy(szObjectName, rhs.szObjectName);
-        ::strcpy(szNextDate, rhs.szNextDate);
-        ::strcpy(szBroken, rhs.szBroken);
-        ::strcpy(szInterval, rhs.szInterval);
-        ::strcpy(szWhat, rhs.szWhat);
+        std::memset(szSchemaUser, 0, sizeof(szSchemaUser));
+        std::memset(szObjectName, 0, sizeof(szObjectName));
+        std::memset(szNextDate, 0, sizeof(szNextDate));
+        std::memset(szBroken, 0, sizeof(szBroken));
+        std::memset(szInterval, 0, sizeof(szInterval));
+        std::strncpy(szSchemaUser, rhs.szSchemaUser, sizeof(szSchemaUser) - 1);
+        szSchemaUser[sizeof(szSchemaUser) - 1] = '\0';
+        std::strncpy(szObjectName, rhs.szObjectName, sizeof(szObjectName) - 1);
+        szObjectName[sizeof(szObjectName) - 1] = '\0';
+        std::strncpy(szNextDate, rhs.szNextDate, sizeof(szNextDate) - 1);
+        szNextDate[sizeof(szNextDate) - 1] = '\0';
+        std::strncpy(szBroken, rhs.szBroken, sizeof(szBroken) - 1);
+        szBroken[sizeof(szBroken) - 1] = '\0';
+        std::strncpy(szInterval, rhs.szInterval, sizeof(szInterval) - 1);
+        szInterval[sizeof(szInterval) - 1] = '\0';
+        std::strncpy(szWhat, rhs.szWhat, rhs.iWhat);
+        szWhat[rhs.iWhat] = '\0';
     }
     ~tAttributes()
     {

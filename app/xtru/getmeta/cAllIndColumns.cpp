@@ -85,13 +85,17 @@ struct cAllIndColumns::tAttributes
         , nColumnNameInd(rhs.nColumnNameInd)
         , iColumnName(rhs.iColumnName)
     {
-        ::memset(szOwner, 0, sizeof(szOwner));
-        ::memset(szTableName, 0, sizeof(szTableName));
-        ::memset(szIndexName, 0, sizeof(szIndexName));
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szTableName, rhs.szTableName);
-        ::strcpy(szIndexName, rhs.szIndexName);
-        ::strcpy(szColumnName, rhs.szColumnName);
+        std::memset(szOwner, 0, sizeof(szOwner));
+        std::memset(szTableName, 0, sizeof(szTableName));
+        std::memset(szIndexName, 0, sizeof(szIndexName));
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szTableName, rhs.szTableName, sizeof(szTableName) - 1);
+        szTableName[sizeof(szTableName) - 1] = '\0';
+        std::strncpy(szIndexName, rhs.szIndexName, sizeof(szIndexName) - 1);
+        szIndexName[sizeof(szIndexName) - 1] = '\0';
+        std::strncpy(szColumnName, rhs.szColumnName, rhs.iColumnName);
+        szColumnName[rhs.iColumnName] = '\0';
     }
     ~tAttributes()
     {

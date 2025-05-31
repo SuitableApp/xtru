@@ -60,27 +60,29 @@ struct cUserObjAuditOpts::tAttributes
     /// @copydoc cAllSequences::tAttributes::tAttributes(const tKeyTuple&)
     explicit tAttributes(const tKeyTuple& oKey)
     {
-        ::memset(szOwner, 0, sizeof(szOwner));
-        ::memset(szObjectName, 0, sizeof(szObjectName));
-        ::memset(szObjectType, 0, sizeof(szObjectType));
-        ::memset(szAlt, 0, sizeof(szAlt));
-        ::memset(szAud, 0, sizeof(szAud));
-        ::memset(szCom, 0, sizeof(szCom));
-        ::memset(szDel, 0, sizeof(szDel));
-        ::memset(szGra, 0, sizeof(szGra));
-        ::memset(szInd, 0, sizeof(szInd));
-        ::memset(szIns, 0, sizeof(szIns));
-        ::memset(szLoc, 0, sizeof(szLoc));
-        ::memset(szRen, 0, sizeof(szRen));
-        ::memset(szSel, 0, sizeof(szSel));
-        ::memset(szUpd, 0, sizeof(szUpd));
-        ::memset(szExe, 0, sizeof(szExe));
-        ::memset(szCre, 0, sizeof(szCre));
-        ::memset(szRea, 0, sizeof(szRea));
-        ::memset(szWri, 0, sizeof(szWri));
-        ::memset(szFbk, 0, sizeof(szFbk));
-        ::strcpy(szOwner, std::get<0>(oKey));
-        ::strcpy(szObjectName, std::get<1>(oKey));
+        std::memset(szOwner, 0, sizeof(szOwner));
+        std::memset(szObjectName, 0, sizeof(szObjectName));
+        std::memset(szObjectType, 0, sizeof(szObjectType));
+        std::memset(szAlt, 0, sizeof(szAlt));
+        std::memset(szAud, 0, sizeof(szAud));
+        std::memset(szCom, 0, sizeof(szCom));
+        std::memset(szDel, 0, sizeof(szDel));
+        std::memset(szGra, 0, sizeof(szGra));
+        std::memset(szInd, 0, sizeof(szInd));
+        std::memset(szIns, 0, sizeof(szIns));
+        std::memset(szLoc, 0, sizeof(szLoc));
+        std::memset(szRen, 0, sizeof(szRen));
+        std::memset(szSel, 0, sizeof(szSel));
+        std::memset(szUpd, 0, sizeof(szUpd));
+        std::memset(szExe, 0, sizeof(szExe));
+        std::memset(szCre, 0, sizeof(szCre));
+        std::memset(szRea, 0, sizeof(szRea));
+        std::memset(szWri, 0, sizeof(szWri));
+        std::memset(szFbk, 0, sizeof(szFbk));
+        std::strncpy(szOwner, std::get<0>(oKey), sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szObjectName, std::get<1>(oKey), sizeof(szObjectName) - 1);
+        szObjectName[sizeof(szObjectName) - 1] = '\0';
     }
     /// @copydoc cAllSequences::tAttributes::tAttributes()
     tAttributes()

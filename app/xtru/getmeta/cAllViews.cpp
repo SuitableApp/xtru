@@ -74,9 +74,12 @@ struct cAllViews::tAttributes
     {
         ::memset(szOwner, 0, sizeof(szOwner));
         ::memset(szViewName, 0, sizeof(szViewName));
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szViewName, rhs.szViewName);
-        ::strcpy(szText, rhs.szText);
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szViewName, rhs.szViewName, sizeof(szViewName) - 1);
+        szViewName[sizeof(szViewName) - 1] = '\0';
+        std::strncpy(szText, rhs.szText, rhs.iText);
+        szText[rhs.iText] = '\0';
     }
     ~tAttributes()
     {

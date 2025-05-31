@@ -74,17 +74,17 @@ struct cAllMviews::tAttributes
         , nQueryInd(ps::lib::sql::ind_t::VAL_IS_NULL)
         , iQuery(0)
     {
-        ::memset(szOwner, 0, sizeof(szOwner));
-        ::memset(szMviewName, 0, sizeof(szMviewName));
-        ::memset(szContainerName, 0, sizeof(szContainerName));
-        ::memset(szUpdatable, 0, sizeof(szUpdatable));
-        ::memset(szRewriteEnabled, 0, sizeof(szRewriteEnabled));
-        ::memset(szRefreshMode, 0, sizeof(szRefreshMode));
-        ::memset(szRefreshMethod, 0, sizeof(szRefreshMethod));
-        ::memset(szBuildMode, 0, sizeof(szBuildMode));
-        ::memset(szRefreshWith, 0, sizeof(szRefreshWith));
-        ::memset(szUseNoIndex, 0, sizeof(szUseNoIndex));
-        ::memset(szConstraintName, 0, sizeof(szConstraintName));
+        std::memset(szOwner, 0, sizeof(szOwner));
+        std::memset(szMviewName, 0, sizeof(szMviewName));
+        std::memset(szContainerName, 0, sizeof(szContainerName));
+        std::memset(szUpdatable, 0, sizeof(szUpdatable));
+        std::memset(szRewriteEnabled, 0, sizeof(szRewriteEnabled));
+        std::memset(szRefreshMode, 0, sizeof(szRefreshMode));
+        std::memset(szRefreshMethod, 0, sizeof(szRefreshMethod));
+        std::memset(szBuildMode, 0, sizeof(szBuildMode));
+        std::memset(szRefreshWith, 0, sizeof(szRefreshWith));
+        std::memset(szUseNoIndex, 0, sizeof(szUseNoIndex));
+        std::memset(szConstraintName, 0, sizeof(szConstraintName));
         ::strcpy(szOwner, std::get<0>(oKey));
     }
     /// @copydoc cAllSequences::tAttributes::tAttributes()
@@ -104,30 +104,42 @@ struct cAllMviews::tAttributes
         , nQueryInd(rhs.nQueryInd)
         , iQuery(rhs.iQuery)
     {
-        ::memset(szOwner, 0, sizeof(szOwner));
-        ::memset(szMviewName, 0, sizeof(szMviewName));
-        ::memset(szContainerName, 0, sizeof(szContainerName));
-        ::memset(szUpdatable, 0, sizeof(szUpdatable));
-        ::memset(szRewriteEnabled, 0, sizeof(szRewriteEnabled));
-        ::memset(szRefreshMode, 0, sizeof(szRefreshMode));
-        ::memset(szRefreshMethod, 0, sizeof(szRefreshMethod));
-        ::memset(szBuildMode, 0, sizeof(szBuildMode));
-        ::memset(szRefreshWith, 0, sizeof(szRefreshWith));
-        ::memset(szUseNoIndex, 0, sizeof(szUseNoIndex));
-        ::memset(szConstraintName, 0, sizeof(szConstraintName));
-        ::memset(szQuery, 0, rhs.iQuery + 1);
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szMviewName, rhs.szMviewName);
-        ::strcpy(szContainerName, rhs.szContainerName);
-        ::strcpy(szUpdatable, rhs.szUpdatable);
-        ::strcpy(szRewriteEnabled, rhs.szRewriteEnabled);
-        ::strcpy(szRefreshMode, rhs.szRefreshMode);
-        ::strcpy(szRefreshMethod, rhs.szRefreshMethod);
-        ::strcpy(szBuildMode, rhs.szBuildMode);
-        ::strcpy(szRefreshWith, rhs.szRefreshWith);
-        ::strcpy(szUseNoIndex, rhs.szUseNoIndex);
-        ::strcpy(szConstraintName, rhs.szConstraintName);
-        ::strcpy(szQuery, rhs.szQuery);
+        std::memset(szOwner, 0, sizeof(szOwner));
+        std::memset(szMviewName, 0, sizeof(szMviewName));
+        std::memset(szContainerName, 0, sizeof(szContainerName));
+        std::memset(szUpdatable, 0, sizeof(szUpdatable));
+        std::memset(szRewriteEnabled, 0, sizeof(szRewriteEnabled));
+        std::memset(szRefreshMode, 0, sizeof(szRefreshMode));
+        std::memset(szRefreshMethod, 0, sizeof(szRefreshMethod));
+        std::memset(szBuildMode, 0, sizeof(szBuildMode));
+        std::memset(szRefreshWith, 0, sizeof(szRefreshWith));
+        std::memset(szUseNoIndex, 0, sizeof(szUseNoIndex));
+        std::memset(szConstraintName, 0, sizeof(szConstraintName));
+        std::memset(szQuery, 0, rhs.iQuery + 1);
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szMviewName, rhs.szMviewName, sizeof(szMviewName) - 1);
+        szMviewName[sizeof(szMviewName) - 1] = '\0';
+        std::strncpy(szContainerName, rhs.szContainerName, sizeof(szContainerName) - 1);
+        szContainerName[sizeof(szContainerName) - 1] = '\0';
+        std::strncpy(szUpdatable, rhs.szUpdatable, sizeof(szUpdatable) - 1);
+        szUpdatable[sizeof(szUpdatable) - 1] = '\0';
+        std::strncpy(szRewriteEnabled, rhs.szRewriteEnabled, sizeof(szRewriteEnabled) - 1);
+        szRewriteEnabled[sizeof(szRewriteEnabled) - 1] = '\0';
+        std::strncpy(szRefreshMode, rhs.szRefreshMode, sizeof(szRefreshMode) - 1);
+        szRefreshMode[sizeof(szRefreshMode) - 1] = '\0';
+        std::strncpy(szRefreshMethod, rhs.szRefreshMethod, sizeof(szRefreshMethod) - 1);
+        szRefreshMethod[sizeof(szRefreshMethod) - 1] = '\0';
+        std::strncpy(szBuildMode, rhs.szBuildMode, sizeof(szBuildMode) - 1);
+        szBuildMode[sizeof(szBuildMode) - 1] = '\0';
+        std::strncpy(szRefreshWith, rhs.szRefreshWith, sizeof(szRefreshWith) - 1);
+        szRefreshWith[sizeof(szRefreshWith) - 1] = '\0';
+        std::strncpy(szUseNoIndex, rhs.szUseNoIndex, sizeof(szUseNoIndex) - 1);
+        szUseNoIndex[sizeof(szUseNoIndex) - 1] = '\0';
+        std::strncpy(szConstraintName, rhs.szConstraintName, sizeof(szConstraintName) - 1);
+        szConstraintName[sizeof(szConstraintName) - 1] = '\0';
+        std::strncpy(szQuery, rhs.szQuery, rhs.iQuery);
+        szQuery[rhs.iQuery] = '\0';
     }
     ~tAttributes()
     {

@@ -136,15 +136,24 @@ struct cConsOfCheck::tAttributes
         ::memset(szValidated, 0, sizeof(szValidated));
         ::memset(szGenerated, 0, sizeof(szGenerated));
         // copy the data.
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szTableName, rhs.szTableName);
-        ::strcpy(szConstraintName, rhs.szConstraintName);
-        ::strcpy(szSearchCondition, rhs.szSearchCondition);
-        ::strcpy(szStatus, rhs.szStatus);
-        ::strcpy(szDeferrable, rhs.szDeferrable);
-        ::strcpy(szDeferred, rhs.szDeferred);
-        ::strcpy(szValidated, rhs.szValidated);
-        ::strcpy(szGenerated, rhs.szGenerated);
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szTableName, rhs.szTableName, sizeof(szTableName) - 1);
+        szTableName[sizeof(szTableName) - 1] = '\0';
+        std::strncpy(szConstraintName, rhs.szConstraintName, sizeof(szConstraintName) - 1);
+        szConstraintName[sizeof(szConstraintName) - 1] = '\0';
+        std::strncpy(szSearchCondition, rhs.szSearchCondition, rhs.iSearchCondition);
+        szSearchCondition[rhs.iSearchCondition] = '\0';
+        std::strncpy(szStatus, rhs.szStatus, sizeof(szStatus) - 1);
+        szStatus[sizeof(szStatus) - 1] = '\0';
+        std::strncpy(szDeferrable, rhs.szDeferrable, sizeof(szDeferrable) - 1);
+        szDeferrable[sizeof(szDeferrable) - 1] = '\0';
+        std::strncpy(szDeferred, rhs.szDeferred, sizeof(szDeferred) - 1);
+        szDeferred[sizeof(szDeferred) - 1] = '\0';
+        std::strncpy(szValidated, rhs.szValidated, sizeof(szValidated) - 1);
+        szValidated[sizeof(szValidated) - 1] = '\0';
+        std::strncpy(szGenerated, rhs.szGenerated, sizeof(szGenerated) - 1);
+        szGenerated[sizeof(szGenerated) - 1] = '\0';
     }
     ~tAttributes()
     {

@@ -180,21 +180,35 @@ struct cAllConstraints::tAttributes
         ::memset(szIndexOwner, 0, sizeof(szIndexOwner));
         ::memset(szIndexName, 0, sizeof(szIndexName));
         // copy the data.
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szConstraintName, rhs.szConstraintName);
-        ::strcpy(szConstraintType, rhs.szConstraintType);
-        ::strcpy(szTableName, rhs.szTableName);
-        ::strcpy(szSearchCondition, rhs.szSearchCondition);
-        ::strcpy(szROwner, rhs.szROwner);
-        ::strcpy(szRConstraintName, rhs.szRConstraintName);
-        ::strcpy(szDeleteRule, rhs.szDeleteRule);
-        ::strcpy(szStatus, rhs.szStatus);
-        ::strcpy(szDeferrable, rhs.szDeferrable);
-        ::strcpy(szDeferred, rhs.szDeferred);
-        ::strcpy(szValidated, rhs.szValidated);
-        ::strcpy(szGenerated, rhs.szGenerated);
-        ::strcpy(szIndexOwner, rhs.szIndexOwner);
-        ::strcpy(szIndexName, rhs.szIndexName);
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szConstraintName, rhs.szConstraintName, sizeof(szConstraintName) - 1);
+        szConstraintName[sizeof(szConstraintName) - 1] = '\0';
+        std::strncpy(szConstraintType, rhs.szConstraintType, sizeof(szConstraintType) - 1);
+        szConstraintType[sizeof(szConstraintType) - 1] = '\0';
+        std::strncpy(szTableName, rhs.szTableName, sizeof(szTableName) - 1);
+        szTableName[sizeof(szTableName) - 1] = '\0';
+        std::strcpy(szSearchCondition, rhs.szSearchCondition);
+        std::strncpy(szROwner, rhs.szROwner, sizeof(szROwner) - 1);
+        szROwner[sizeof(szROwner) - 1] = '\0';
+        std::strncpy(szRConstraintName, rhs.szRConstraintName, sizeof(szRConstraintName) - 1);
+        szRConstraintName[sizeof(szRConstraintName) - 1] = '\0';
+        std::strncpy(szDeleteRule, rhs.szDeleteRule, sizeof(szDeleteRule) - 1);
+        szDeleteRule[sizeof(szDeleteRule) - 1] = '\0';
+        std::strncpy(szStatus, rhs.szStatus, sizeof(szStatus) - 1);
+        szStatus[sizeof(szStatus) - 1] = '\0';
+        std::strncpy(szDeferrable, rhs.szDeferrable, sizeof(szDeferrable) - 1);
+        szDeferrable[sizeof(szDeferrable) - 1] = '\0';
+        std::strncpy(szDeferred, rhs.szDeferred, sizeof(szDeferred) - 1);
+        szDeferred[sizeof(szDeferred) - 1] = '\0';
+        std::strncpy(szValidated, rhs.szValidated, sizeof(szValidated) - 1);
+        szValidated[sizeof(szValidated) - 1] = '\0';
+        std::strncpy(szGenerated, rhs.szGenerated, sizeof(szGenerated) - 1);
+        szGenerated[sizeof(szGenerated) - 1] = '\0';
+        std::strncpy(szIndexOwner, rhs.szIndexOwner, sizeof(szIndexOwner) - 1);
+        szIndexOwner[sizeof(szIndexOwner) - 1] = '\0';
+        std::strncpy(szIndexName, rhs.szIndexName, sizeof(szIndexName) - 1);
+        szIndexName[sizeof(szIndexName) - 1] = '\0';
     }
     ~tAttributes()
     {

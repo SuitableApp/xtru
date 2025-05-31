@@ -81,10 +81,14 @@ struct cAllColComments::tAttributes
         ::memset(szOwner, 0, sizeof(szOwner));
         ::memset(szTableName, 0, sizeof(szTableName));
         ::memset(szColumnName, 0, sizeof(szColumnName));
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szTableName, rhs.szTableName);
-        ::strcpy(szColumnName, rhs.szColumnName);
-        ::strcpy(szComments, rhs.szComments);
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szTableName, rhs.szTableName, sizeof(szTableName) - 1);
+        szTableName[sizeof(szTableName) - 1] = '\0';
+        std::strncpy(szColumnName, rhs.szColumnName, sizeof(szColumnName) - 1);
+        szColumnName[sizeof(szColumnName) - 1] = '\0';
+        std::strncpy(szComments, rhs.szComments, rhs.iComments);
+        szComments[rhs.iComments] = '\0';
     }
     ~tAttributes()
     {

@@ -425,7 +425,8 @@ void cAllPartTables::cRetriever::vPostBulkAction(const uint32_t& iNumIter)
 	for (uint32_t i = 0; i < iNumIter; i++){
 		if (rTable_[i].iDefMaxExtents > UNLIMITED_EXTENTS)
         {
-			::strcpy(rTable_[i].long_str, "unlimited");
+			std::strncpy(rTable_[i].long_str, "unlimited", sizeof(rTable_[i].long_str) - 1);
+			rTable_[i].long_str[sizeof(rTable_[i].long_str) - 1] = '\0';
 		}
         else
         {

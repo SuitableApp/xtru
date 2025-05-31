@@ -545,7 +545,8 @@ bool cAllTables::iCheckClusterTable(
     {
         if (it->iKeyMatched(rhs) && it->nClusterNameInd == ps::lib::sql::ind_t::VAL_IS_NOTNULL)
         {
-            ::strcpy(szClusterName, it->szClusterName);
+            std::strncpy(szClusterName, it->szClusterName, sizeof(szClusterName) - 1);
+            szClusterName[sizeof(szClusterName) - 1] = '\0';
             return true;
         }
         ++it;

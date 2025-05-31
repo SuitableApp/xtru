@@ -97,7 +97,7 @@ cFunctionalReplace::cTranslator::cTranslator(const char* szStrToMatch, const siz
 {
     ::memcpy(szStrToMatch_, szStrToMatch, iLength);
     szStrToMatch_[iLength] = '\0';
-    ::memset(szTbl_, 0, MAX_NUM_CHARS * MAX_NUM_VARIABLES);
+    std::memset(szTbl_, 0, MAX_NUM_CHARS * MAX_NUM_VARIABLES);
 }
 
 /**
@@ -113,13 +113,15 @@ cFunctionalReplace::cTranslator::cTranslator(const std::string& sStrToMatch)
 cFunctionalReplace::cTranslator::cTranslator(const cTranslator& rhs)
     : szStrToMatch_(new char[::strlen(rhs.szStrToMatch_) + 1])
 {
-    ::strcpy(szStrToMatch_, rhs.szStrToMatch_);
+    std::strncpy(szStrToMatch_, rhs.szStrToMatch_, ::strlen(rhs.szStrToMatch_));
+    szStrToMatch_[::strlen(rhs.szStrToMatch_)] = '\0';
     for (int i = 0; i < MAX_NUM_VARIABLES; ++i)
     {
         ::memset(szTbl_[i], 0, MAX_NUM_CHARS);
         if (::strlen(rhs.szTbl_[i]) > 0)
         {
-            ::strcpy(szTbl_[i], rhs.szTbl_[i]);
+            std::strncpy(szTbl_[i], rhs.szTbl_[i], MAX_NUM_CHARS - 1);
+            szTbl_[i][MAX_NUM_CHARS - 1] = '\0';
         }
     }
 }

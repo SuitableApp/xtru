@@ -83,15 +83,19 @@ struct cAllIndExpressions::tAttributes
         , nColumnExpressionInd(rhs.nColumnExpressionInd)
         , iColumnExpression(rhs.iColumnExpression)
     {
-        ::memset(szOwner, 0, sizeof(szOwner));
-        ::memset(szTableName, 0, sizeof(szTableName));
-        ::memset(szIndexName, 0, sizeof(szIndexName));
-        ::memset(szDescend, 0, sizeof(szDescend));
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szTableName, rhs.szTableName);
-        ::strcpy(szIndexName, rhs.szIndexName);
-        ::strcpy(szDescend, rhs.szDescend);
-        ::strcpy(szColumnExpression, rhs.szColumnExpression);
+        std::memset(szOwner, 0, sizeof(szOwner));
+        std::memset(szTableName, 0, sizeof(szTableName));
+        std::memset(szIndexName, 0, sizeof(szIndexName));
+        std::memset(szDescend, 0, sizeof(szDescend));
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szTableName, rhs.szTableName, sizeof(szTableName) - 1);
+        szTableName[sizeof(szTableName) - 1] = '\0';
+        std::strncpy(szIndexName, rhs.szIndexName, sizeof(szIndexName) - 1);
+        szIndexName[sizeof(szIndexName) - 1] = '\0';
+        std::strncpy(szDescend, rhs.szDescend, sizeof(szDescend) - 1);
+        szDescend[sizeof(szDescend) - 1] = '\0';
+        std::strcpy(szColumnExpression, rhs.szColumnExpression);
     }
     ~tAttributes()
     {

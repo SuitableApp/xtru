@@ -73,11 +73,14 @@ struct cAllTabComments::tAttributes
         , nCommentsInd(rhs.nCommentsInd)
         , iComments(rhs.iComments)
     {
-        ::memset(szOwner, 0, sizeof(szOwner));
-        ::memset(szTableName, 0, sizeof(szTableName));
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szTableName, rhs.szTableName);
-        ::strcpy(szComments, rhs.szComments);
+        std::memset(szOwner, 0, sizeof(szOwner));
+        std::memset(szTableName, 0, sizeof(szTableName));
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szTableName, rhs.szTableName, sizeof(szTableName) - 1);
+        szTableName[sizeof(szTableName) - 1] = '\0';
+        std::strncpy(szComments, rhs.szComments, rhs.iComments);
+        szComments[rhs.iComments] = '\0';
     }
     ~tAttributes()
     {

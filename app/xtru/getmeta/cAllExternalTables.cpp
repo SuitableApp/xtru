@@ -99,15 +99,26 @@ struct cAllExternalTables::tAttributes
         ::memset(szDefaultDirectoryName, 0, sizeof(szDefaultDirectoryName));
         ::memset(szRejectLimit, 0, sizeof(szRejectLimit));
         ::memset(szAccessType, 0, sizeof(szAccessType));
-        ::strcpy(szOwner, rhs.szOwner);
-        ::strcpy(szTableName, rhs.szTableName);
-        ::strcpy(szTypeOwner, rhs.szTypeOwner);
-        ::strcpy(szTypeName, rhs.szTypeName);
-        ::strcpy(szDefaultDirectoryOwner, rhs.szDefaultDirectoryOwner);
-        ::strcpy(szDefaultDirectoryName, rhs.szDefaultDirectoryName);
-        ::strcpy(szRejectLimit, rhs.szRejectLimit);
-        ::strcpy(szAccessType, rhs.szAccessType);
-        ::strcpy(szAccessParameters, rhs.szAccessParameters);
+        std::strncpy(szOwner, rhs.szOwner, sizeof(szOwner) - 1);
+        szOwner[sizeof(szOwner) - 1] = '\0';
+        std::strncpy(szTableName, rhs.szTableName, sizeof(szTableName) - 1);
+        szTableName[sizeof(szTableName) - 1] = '\0';
+        std::strncpy(szTypeOwner, rhs.szTypeOwner, sizeof(szTypeOwner) - 1);
+        szTypeOwner[sizeof(szTypeOwner) - 1] = '\0';
+        std::strncpy(szTypeName, rhs.szTypeName, sizeof(szTypeName) - 1);
+        szTypeName[sizeof(szTypeName) - 1] = '\0';
+        std::strncpy(szDefaultDirectoryOwner, rhs.szDefaultDirectoryOwner, sizeof(szDefaultDirectoryOwner) - 1);
+        szDefaultDirectoryOwner[sizeof(szDefaultDirectoryOwner) - 1] = '\0';
+        std::strncpy(szDefaultDirectoryName, rhs.szDefaultDirectoryName, sizeof(szDefaultDirectoryName) - 1);
+        szDefaultDirectoryName[sizeof(szDefaultDirectoryName) - 1] = '\0';
+        std::strncpy(szRejectLimit, rhs.szRejectLimit, sizeof(szRejectLimit) - 1);
+        szRejectLimit[sizeof(szRejectLimit) - 1] = '\0';
+        std::strncpy(szAccessType, rhs.szAccessType, sizeof(szAccessType) - 1);
+        szAccessType[sizeof(szAccessType) - 1] = '\0';
+        if (szAccessParameters && rhs.szAccessParameters) {
+            std::strncpy(szAccessParameters, rhs.szAccessParameters, iAccessParameters);
+            szAccessParameters[iAccessParameters] = '\0';
+        }
     }
     ~tAttributes()
     {

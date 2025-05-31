@@ -345,11 +345,12 @@ void cUserSegments::cRetriever::vPostBulkAction(const uint32_t& iNumIter)
         rTable_[i].i_min_extents = iCompress_ ? 1 : rTable_[i].iMinExtents;
         if (rTable_[i].iMaxExtents > UNLIMITED_EXTENTS)
         {
-            ::strcpy(rTable_[i].szMaxExtents, "unlimited");
+            std::strncpy(rTable_[i].szMaxExtents, "unlimited", sizeof(rTable_[i].szMaxExtents) - 1);
+            rTable_[i].szMaxExtents[sizeof(rTable_[i].szMaxExtents) - 1] = '\0';
         }
         else
         {
-            ::sprintf(rTable_[i].szMaxExtents, "%d", rTable_[i].iMaxExtents);
+            std::snprintf(rTable_[i].szMaxExtents, sizeof(rTable_[i].szMaxExtents), "%d", rTable_[i].iMaxExtents);
         }
     }
     oList_.insert(oList_.end(), &rTable_[0], &rTable_[iNumIter]);
