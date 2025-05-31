@@ -23,7 +23,7 @@ cd $WKDIR
 # Build and Install dependencies.
 PRJ_LIST='llvm libgperftools libboost'
 for PRJ_NAME in $PRJ_LIST; do
-    RPM_NAME=/home/$DEVELOPER/rpmbuild/RPMS/$MACHINE/${PRJ_NAME}_custom-$VERS-$RNO.el9.$MACHINE.rpm
+    RPM_NAME=/home/$DEVELOPER/rpmbuild/RPMS/$MACHINE/${PRJ_NAME}_custom-$VERS-$RNO.el9.x86_64.rpm
     if [ ! -f $RPM_NAME ]; then
         spectool -g -R ${PRJ_NAME}_custom.spec
         if [ $? -ne 0 ]; then exit -1; fi
@@ -39,7 +39,7 @@ done
 
 # Build and Install a subject (Extreme Unloader).
 PRJ_NAME=xtru
-RPM_NAME=/home/$DEVELOPER/rpmbuild/RPMS/$MACHINE/${PRJ_NAME}-$VERS-$RNO.el9.$MACHINE.rpm
+RPM_NAME=/home/$DEVELOPER/rpmbuild/RPMS/$MACHINE/${PRJ_NAME}-$VERS-$RNO.el9.x86_64.rpm
 if [ ! -f $RPM_NAME ]; then
     git archive HEAD --output=../rpmbuild/SOURCES/${PRJ_NAME}-$VERS.tar.gz --prefix=${PRJ_NAME}-$VERS/
     rpmbuild -ba ${PRJ_NAME}.spec  2>&1 | tee build_${PRJ_NAME}.log
