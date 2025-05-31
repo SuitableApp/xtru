@@ -36,6 +36,8 @@ RUN sed -i /etc/sudoers \
 # Prepare an environment to maintain development.
 RUN groupadd $DEVELOPER
 RUN useradd -g $DEVELOPER -G wheel $DEVELOPER
+RUN mkdir -p /home/$DEVELOPER/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+RUN chown -R $DEVELOPER:$DEVELOPER /home/$DEVELOPER/rpmbuild
 
 RUN ulimit -c unlimited
 
