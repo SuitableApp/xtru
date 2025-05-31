@@ -22,7 +22,7 @@ ENV REPOS            gitlab
 RUN dnf -y update && dnf -y install oracle-epel-release-el9 oraclelinux-developer-release-el9 && \
     dnf -y install python3-oci-cli rsync hostname sudo wget rlwrap vim-enhanced jq mlocate \
       git rpmdevtools libcurl-devel ccache p7zip openssl-devel ncurses-devel python3-devel \
-      sqlite-devel libunwind-devel autoconf automake libtool cmake gcc-c++ clang && \
+      sqlite-devel libunwind-devel zlib-devel autoconf automake libtool cmake gcc-c++ clang && \
     dnf clean all
 
 # Avoiding obstacles in distributing files containing hyphens.
