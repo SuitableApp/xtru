@@ -1,6 +1,6 @@
 %define debug_package %{nil}
-%define dist .el8
-%define org_version 8.0.1
+%define dist .el9
+%define org_version 20.1.0
 %undefine __arch_install_post
 
 
@@ -14,7 +14,7 @@ Packager:      XTRU product development department <support@suitableapp.com>
 Vendor:        SuitableApp
 URL:           https://llvm.org/
 Source0:       https://github.com/llvm/llvm-project/releases/download/llvmorg-%{org_version}/llvm-%{org_version}.src.tar.xz
-Source1:       https://github.com/llvm/llvm-project/releases/download/llvmorg-%{org_version}/cfe-%{org_version}.src.tar.xz
+Source1:       https://github.com/llvm/llvm-project/releases/download/llvmorg-%{org_version}/clang-%{org_version}.src.tar.xz
 Source2:       https://github.com/llvm/llvm-project/releases/download/llvmorg-%{org_version}/lld-%{org_version}.src.tar.xz
 BuildRequires: cmake
 BuildRequires: zlib-devel
@@ -31,7 +31,7 @@ tools as well as libraries with equivalent functionality.
 
 %prep
 %setup -q -a 1 -a 2 -n %{name}-%{version} -c
-mv cfe-%{org_version}.src llvm-%{org_version}.src/tools/clang
+mv clang-%{org_version}.src llvm-%{org_version}.src/tools/clang
 mv lld-%{org_version}.src llvm-%{org_version}.src/tools/lld
 
 %build

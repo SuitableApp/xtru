@@ -41,7 +41,7 @@ CPPFLAGS=-MMD -Iinc -I$${ORACLE_HOME}/rdbms/public
 define static_part
 endef
 
-CXXFLAGS=$(OPTIMIZING) -std=c++11 -pthread -Wall -m64
+CXXFLAGS=$(OPTIMIZING) -std=c++17 -pthread -Wall -m64
 
 all: $(PCH_OBJECTS)
 

@@ -83,7 +83,7 @@ else
 PCH_OPTS=-I$(PCHDIR)
 endif
 
-CXXFLAGS=$(OPTIMIZING) -pthread -Wall $(PLATFORM_CXXFLAGS)
+CXXFLAGS=$(OPTIMIZING) -std=c++17 -pthread -Wall $(PLATFORM_CXXFLAGS)
 
 LDFLAGS=-Wall -rdynamic -lstdc++ -lm -ldl -lpthread $(PLATFORM_FROF_LDFLAGS)
 
