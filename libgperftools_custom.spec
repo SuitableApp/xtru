@@ -1,9 +1,9 @@
 %define debug_package %{nil}
-%define dist .el8
-%define org_version 2.10
+%define dist .el9
+%define org_version 2.16
 %undefine __arch_install_post
 
-Summary:       Google Performance Tools 2.6rc4
+Summary:       Google Performance Tools 2.16
 Name:          libgperftools_custom
 License:       BSD
 Version:       5.3.0
@@ -12,7 +12,7 @@ Group:         Development/Debuggers
 Packager:      XTRU product development department <support@suitableapp.com>
 Vendor:        SuitableApp
 URL:           https://github.com/gperftools/gperftools
-Source0:       https://github.com/gperftools/gperftools/archive/gperftools-%{org_version}.zip
+Source0:       https://github.com/gperftools/gperftools/releases/download/gperftools-%{org_version}/gperftools-%{org_version}.tar.gz
 BuildRequires: libunwind-devel
 BuildRequires: autoconf
 BuildRequires: automake
@@ -26,7 +26,7 @@ Google Performance Tools
 https://github.com/gperftools/gperftools
 
 %prep
-%setup -q -n gperftools-gperftools-%{org_version}
+%setup -q -n gperftools-%{org_version}
 autoreconf -iv
 
 %build

@@ -3,7 +3,7 @@ CONF      = Debug
 COMPILER  = clang++
 CND_CONF  = $(CONF)
 INCLUDE   = -I/usr/local/ssl/include
-CFLAGS    = -c -fexceptions -std=c++11
+CFLAGS    = -c -fexceptions -std=c++17
 LIBS      = -L/usr/local/ssl/lib -lcrypto
 OBJS      = cCryptOpenSSL.o cInput.o nsMkcrd.o mkcrd.o
 OBJS_LIB  = nsCompo/cApplication.o nsCompo/cArgStyleParser.o nsCompo/cArgUtils.o nsCompo/cEnvStrings.o nsCompo/cStatCounter.o nsCompo/cVectorScope.o nsCompo/cSwitchUtils.o

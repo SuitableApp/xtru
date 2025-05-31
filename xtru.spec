@@ -1,5 +1,5 @@
 %define debug_package %{nil}
-%define dist .el8
+%define dist .el9
 
 Summary:       Extreme Unloader
 Name:          xtru
@@ -26,7 +26,7 @@ Requires:      openssl >= 1.0.1e
 Requires:      sqlite >= 3.6
 %description
 Extreme Unloader (XTRU) is an utility softwre for quick file exporting from Oracle Database.
-This software is written in Standard C++11 using Boost C++ libraries and Oracle C++ Call Interface (OCCI).
+This software is written in Standard C++17 using Boost C++ libraries and Oracle C++ Call Interface (OCCI).
 High utilization efficiency for network and memory buffer can be expected, because it able to fetch multiple rows at a time.
 By allocating threads for each partition in the table, CPU time can be intensively pour, so you can fully utilize system scalability and reduce the time required.
 XTRU would help to incarnate your operational plan that has been taken too match time and given up, because it outperformed than the conventional.

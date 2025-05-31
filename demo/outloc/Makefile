@@ -36,7 +36,7 @@ PCH_OPTS= -include-pch ../../inc/build/Debug/CLang-Linux/pslib.h.gch
 else
 endif
 
-CXXFLAGS= -std=c++11 -Wall -m64 -pipe $(PLATFORM_CXXFLAGS)
+CXXFLAGS= -std=c++17 -Wall -m64 -pipe $(PLATFORM_CXXFLAGS)
 
 all: outloc child
 

@@ -1,4 +1,4 @@
-FROM oraclelinux:8
+FROM oraclelinux:9
 
 MAINTAINER s_hirayama <support@suitableapp.com>
 
@@ -6,7 +6,7 @@ ARG UNAME_M
 ENV MACHINE          $UNAME_M
 ENV VERS             5.3.0
 ENV RNO              2
-ENV ORA_RELEASE      19.10
+ENV ORA_RELEASE      23.8
 ENV ORA_PATCH_LV     0.0.0-1
 ENV OCCI_INC_PATH    /usr/include/oracle/$ORA_RELEASE/client64
 ENV OCCI_LIB_PATH    /usr/lib/oracle/$ORA_RELEASE/client64/lib
@@ -19,11 +19,10 @@ ENV WKDIR            xtru
 # which alias is configured in the .ssh/config.
 ENV REPOS            gitlab
 
-RUN dnf -y update && dnf -y install oracle-epel-release-el8 oraclelinux-developer-release-el8 && \
-    dnf config-manager --add-repo http://yum.oracle.com/repo/OracleLinux/OL8/developer/EPEL/$MACHINE && \
-    dnf -y install python36-oci-cli rsync hostname sudo wget rlwrap vim-enhanced jq mlocate \
+RUN dnf -y update && dnf -y install oracle-epel-release-el9 oraclelinux-developer-release-el9 && \
+    dnf -y install python3-oci-cli rsync hostname sudo wget rlwrap vim-enhanced jq mlocate \
       git rpmdevtools libcurl-devel ccache p7zip openssl-devel ncurses-devel python3-devel \
-      sqlite-devel libunwind-devel rr-testsuite autoconf automake libtool cmake gcc-c++ && \
+      sqlite-devel libunwind-devel zlib-devel autoconf automake libtool cmake gcc-c++ clang && \
     dnf clean all
 
 # Avoiding obstacles in distributing files containing hyphens.
@@ -37,6 +36,8 @@ RUN sed -i /etc/sudoers \
 # Prepare an environment to maintain development.
 RUN groupadd $DEVELOPER
 RUN useradd -g $DEVELOPER -G wheel $DEVELOPER
+RUN mkdir -p /home/$DEVELOPER/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+RUN chown -R $DEVELOPER:$DEVELOPER /home/$DEVELOPER/rpmbuild
 
 RUN ulimit -c unlimited
 
