@@ -22,14 +22,14 @@
 #include <pslib.h>
 #include <xtru.h>
 
-#define LOGGING_TYPE_LEN               (3+1)
-#define CACHE_TYPE_LEN                 (1+1)
-#define ROWIDS_LEN                     (3+1)
-#define PK_TYPE_LEN                    (3+1)
-#define OBJECT_ID_LEN                  (3+1)
-#define FILTER_COL_LEN                 (3+1)
-#define SEQUENCE_LEN                   (3+1)
-#define INCLUDE_NEW_VALUES_LEN         (3+1)
+constexpr size_t LOGGING_TYPE_LEN = 3+1;
+constexpr size_t CACHE_TYPE_LEN = 1+1;
+constexpr size_t ROWIDS_LEN = 3+1;
+constexpr size_t PK_TYPE_LEN = 3+1;
+constexpr size_t OBJECT_ID_LEN = 3+1;
+constexpr size_t FILTER_COL_LEN = 3+1;
+constexpr size_t SEQUENCE_LEN = 3+1;
+constexpr size_t INCLUDE_NEW_VALUES_LEN = 3+1;
 
 namespace ps
 {
@@ -308,28 +308,28 @@ cAllMviewLogs::cRetriever::cRetriever(
         , sGetSqlInList(oOwners)
     });
     // Inbounding data from Oracle.
-    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szMaster, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szLogTable, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iPctFree, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iPctUsed, SQLT_UIN, &rTable_->nPctUsedInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iIniTrans, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iMaxTrans, SQLT_UIN, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szLogging, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iPctIncrease, SQLT_UIN, &rTable_->nPctIncreaseInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iFreelists, SQLT_UIN, &rTable_->nFreelistsInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->iFreelistGroups, SQLT_UIN, &rTable_->nFreelistGroupsInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szBufferPool, SQLT_STR, &rTable_->nBufferPoolInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szTablespaceName, SQLT_STR, &rTable_->nTablespaceNameInd, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szDegree, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szInstances, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szCache, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szRowIds, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szPrimaryKey, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szObjectId, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szFilterColumns, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szSequence, SQLT_STR, NULL, NULL, NULL, iSkip_);
-    oDefine_.vAddItem(rTable_->szIncludeNewValues, SQLT_STR, NULL, NULL, NULL, iSkip_);
+    oDefine_.vAddItem(rTable_->szOwner, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szMaster, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szLogTable, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iPctFree, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iPctUsed, SQLT_UIN, &rTable_->nPctUsedInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iIniTrans, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iMaxTrans, SQLT_UIN, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szLogging, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iPctIncrease, SQLT_UIN, &rTable_->nPctIncreaseInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iFreelists, SQLT_UIN, &rTable_->nFreelistsInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->iFreelistGroups, SQLT_UIN, &rTable_->nFreelistGroupsInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szBufferPool, SQLT_STR, &rTable_->nBufferPoolInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szTablespaceName, SQLT_STR, &rTable_->nTablespaceNameInd, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szDegree, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szInstances, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szCache, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szRowIds, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szPrimaryKey, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szObjectId, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szFilterColumns, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szSequence, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
+    oDefine_.vAddItem(rTable_->szIncludeNewValues, SQLT_STR, nullptr, nullptr, nullptr, iSkip_);
 }
 
 void cAllMviewLogs::cRetriever::vPreBulkAction(const uint32_t& iBulkSize)
