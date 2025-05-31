@@ -35,7 +35,8 @@ sed -i "s/using gcc/using gcc : : : <cxxflags>\"-Wno-unused-variable -Wno-deprec
 
 %install
 %{__install} -m755 -d $RPM_BUILD_ROOT/usr/local/lib $RPM_BUILD_ROOT/usr/local/include/boost
-%{__install} -m755 -t $RPM_BUILD_ROOT/usr/local/lib stage/lib/*
+%{__install} -m755 stage/lib/libboost_*.a stage/lib/libboost_*.so* $RPM_BUILD_ROOT/usr/local/lib/
+cp -R stage/lib/cmake $RPM_BUILD_ROOT/usr/local/lib/
 chmod a-x $RPM_BUILD_ROOT/usr/local/lib/libboost_*.a
 cp -R boost/* $RPM_BUILD_ROOT/usr/local/include/boost
 
